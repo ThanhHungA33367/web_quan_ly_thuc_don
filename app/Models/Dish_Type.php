@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Dish_Type extends Model
 {
     use HasFactory;
+    public $table = "dish_type";
 }

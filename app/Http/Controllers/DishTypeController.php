@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dish;
 use App\Models\Dish_Type;
 use App\Http\Requests\StoreDish_TypeRequest;
 use App\Http\Requests\UpdateDish_TypeRequest;
+use DishType;
+use Illuminate\Http\Request;
 
 class DishTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request-> get('q');
+        $data = Dish_Type::where('dish_type.name','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.dish_type',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**
