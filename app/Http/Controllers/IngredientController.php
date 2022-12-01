@@ -15,7 +15,15 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        $search = $request-> get('q');
+        $data = Dish::where('ingredients.name','like','%'.$search.'%')
+            ->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
+            ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.ingredients',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**

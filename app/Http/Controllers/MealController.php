@@ -17,8 +17,13 @@ class MealController extends Controller
      */
     public function index()
     {
-
-
+        $search = $request-> get('q');
+        $data = Meal::where('meals.name','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.meals',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**
