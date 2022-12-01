@@ -19,6 +19,7 @@
             @endif
 
         <div class='card-body'>
+            <button  id="mediumButton"  onclick="Add()" class="btn btn-xs btn-info ">Thêm</button>
             <form class="float-right form-group form-inline">
                 <label class="mr-2">Search:</label>
                 <input type="search" name="q" value="{{ $search }}" class="form-control">
@@ -31,9 +32,9 @@
                     <th>Nhóm trẻ</th>
                     <th>Mô tả</th>
                     <th>Kalo/ngày</th>
-                    <th>Thêm</th>
-                    <th>Sửa</th>
-                    <th>Xóa</th>
+
+                    <th></th>
+                    <th></th>
 
 
                 </tr>
@@ -53,13 +54,11 @@
                         <td>
                             {{ $each->kalo_day }}
                         </td>
-                        <td>
-                            <button  id="mediumButton"  onclick="Add()" class="btn btn-xs btn-info ">Thêm</button>
-                        </td>
-                        <td>
+
+                        <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
                         </td>
-                        <td>
+                        <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
                         </td>
 
