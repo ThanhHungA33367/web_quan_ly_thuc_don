@@ -5,17 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Ingredient_Type;
 use App\Http\Requests\StoreIngredient_TypeRequest;
 use App\Http\Requests\UpdateIngredient_TypeRequest;
+use Illuminate\Http\Request;
 
 class IngredientTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        //
+        $search = $request-> get('q');
+        $data = Ingredient_Type::where('ingredient_type.name','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.ingredient_type',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**

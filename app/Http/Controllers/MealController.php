@@ -15,10 +15,15 @@ class MealController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request )
     {
-
-
+        $search = $request-> get('q');
+        $data = Meal::where('meals.name','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.meal',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**

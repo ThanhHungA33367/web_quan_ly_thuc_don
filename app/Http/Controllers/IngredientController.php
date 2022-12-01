@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ingredient;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
+use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
@@ -13,9 +14,17 @@ class IngredientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(request $request)
     {
-        //
+        $search = $request-> get('q');
+        $data = Ingredient::where('ingredients.name','like','%'.$search.'%')
+            ->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
+            ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.ingredients',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**
