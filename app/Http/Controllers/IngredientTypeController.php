@@ -15,7 +15,13 @@ class IngredientTypeController extends Controller
      */
     public function index()
     {
-        //
+        $search = $request-> get('q');
+        $data = Meal::where('ingredient_type.name','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.ingredient_type',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**

@@ -15,7 +15,13 @@ class ChildenTypeController extends Controller
      */
     public function index()
     {
-        //
+        $search = $request-> get('q');
+        $data = Meal::where('children_type.name','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.children_type',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**
