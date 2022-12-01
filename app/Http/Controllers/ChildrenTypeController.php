@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Childen_Type;
+use App\Models\Children_Type;
 use App\Http\Requests\StoreChilden_TypeRequest;
 use App\Http\Requests\UpdateChilden_TypeRequest;
+use Illuminate\Http\Request;
 
-class ChildenTypeController extends Controller
+class ChildrenTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $search = $request-> get('q');
-        $data = Meal::where('children_type.name','like','%'.$search.'%')
+        $data = Children_Type::where('children_type.name','like','%'.$search.'%')
             ->paginate(2)->appends(['q' => $search]);
         return view('page.children_type',[
             'data' => $data,
@@ -48,10 +49,11 @@ class ChildenTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Childen_Type  $childen_Type
+     * @param  \App\Models\Children_Type  $childen_Type
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(Childen_Type $childen_Type)
+    public function show(Children_Type $childen_Type)
     {
         //
     }
@@ -59,10 +61,11 @@ class ChildenTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Childen_Type  $childen_Type
+     * @param  \App\Models\Children_Type  $childen_Type
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Childen_Type $childen_Type)
+    public function edit(Children_Type $childen_Type)
     {
         //
     }
@@ -71,10 +74,11 @@ class ChildenTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateChilden_TypeRequest  $request
-     * @param  \App\Models\Childen_Type  $childen_Type
+     * @param  \App\Models\Children_Type  $childen_Type
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateChilden_TypeRequest $request, Childen_Type $childen_Type)
+    public function update(UpdateChilden_TypeRequest $request, Children_Type $childen_Type)
     {
         //
     }
@@ -82,10 +86,11 @@ class ChildenTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Childen_Type  $childen_Type
+     * @param  \App\Models\Children_Type  $childen_Type
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Childen_Type $childen_Type)
+    public function destroy(Children_Type $childen_Type)
     {
         //
     }

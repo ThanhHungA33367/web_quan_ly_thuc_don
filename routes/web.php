@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ChildrenTypeController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\DishTypeController;
+use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\IngredientTypeController;
 use App\Http\Controllers\MealController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,10 +27,10 @@ Route::get('/layout', function () {
 });
 Route::get('/dish', [DishController::class, 'index'])->name('dish.index');
 Route::get('/dish_type', [DishTypeController::class, 'index'])->name('dish_type.index');
-Route::get('/meal', [DishTypeController::class, 'index'])->name('meal.index');
-Route::get('/children_type', [DishTypeController::class, 'index'])->name('children_type.index');
-Route::get('/ingredients', [DishTypeController::class, 'index'])->name('ingredients.index');
-Route::get('/ingredient_type', [DishTypeController::class, 'index'])->name('ingredient_type.index');
+Route::get('/meal', [MealController::class, 'index'])->name('meal.index');
+Route::get('/children_type', [ChildrenTypeController::class, 'index'])->name('children_type.index');
+Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients.index');
+Route::get('/ingredient_type', [IngredientTypeController::class, 'index'])->name('ingredient_type.index');
 
 
 
