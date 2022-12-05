@@ -376,7 +376,7 @@
                             Quản lý thực phẩm
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
-                            <a class="dropdown-item  " href="{{route('ingredients.index')}}" >
+                            <a class="dropdown-item  " href="{{route('ingredient.index')}}" >
                                 Thực phẩm
                             </a>
                             <a class="dropdown-item  " href="{{route('ingredient_type.index')}}">
