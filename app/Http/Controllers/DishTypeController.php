@@ -21,7 +21,7 @@ class DishTypeController extends Controller
         $search = $request-> get('q');
         $data = Dish_Type::where('dish_type.name','like','%'.$search.'%')
             ->paginate(2)->appends(['q' => $search]);
-        return view('page.dish_type',[
+        return view('page.dish-type.dish_type',[
             'data' => $data,
             'search' => $search,
         ]);
@@ -34,7 +34,7 @@ class DishTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('page.dish-type.modal-add');
     }
 
     /**
@@ -45,7 +45,10 @@ class DishTypeController extends Controller
      */
     public function store(StoreDish_TypeRequest $request)
     {
-        //
+        $dish_type = new Dish_Type();
+        $dish_type->fill($request->all());
+        $dish_type->save();
+        return redirect()->route('dish_type.index')->with('message', 'Thêm thành công!');
     }
 
     /**
@@ -56,7 +59,7 @@ class DishTypeController extends Controller
      */
     public function show(Dish_Type $dish_Type)
     {
-        //
+        
     }
 
     /**
@@ -67,7 +70,10 @@ class DishTypeController extends Controller
      */
     public function edit(Dish_Type $dish_Type)
     {
-        //
+        $object = Dish_Type::where('id', '=', $id)->first();
+        return view('page.dish-type.modal-edit',[
+            'object' => $object,
+        ]);
     }
 
     /**
@@ -79,7 +85,10 @@ class DishTypeController extends Controller
      */
     public function update(UpdateDish_TypeRequest $request, Dish_Type $dish_Type)
     {
-        //
+        $dish_Type = Dish_Type::find($id);
+        $dish_Type->fill($request->except(['_token', '_method']));
+        $dish_Type->save();
+        return redirect()->route('dish_type.index')->with('message', 'Sửa thành công!');
     }
 
     /**
@@ -91,5 +100,9 @@ class DishTypeController extends Controller
     public function destroy(Dish_Type $dish_Type)
     {
         //
+    }
+    public function cancel(Request $request)
+    {
+        Dish_Type::destroy($request->id);
     }
 }
