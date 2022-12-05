@@ -43,7 +43,7 @@ class DishTypeController extends Controller
      * @param  \App\Http\Requests\StoreDish_TypeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDish_TypeRequest $request)
+    public function store(Request $request)
     {
         $dish_type = new Dish_Type();
         $dish_type->fill($request->all());
@@ -68,7 +68,7 @@ class DishTypeController extends Controller
      * @param  \App\Models\Dish_Type  $dish_Type
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dish_Type $dish_Type)
+    public function edit($id)
     {
         $object = Dish_Type::where('id', '=', $id)->first();
         return view('page.dish-type.modal-edit',[
@@ -83,7 +83,7 @@ class DishTypeController extends Controller
      * @param  \App\Models\Dish_Type  $dish_Type
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDish_TypeRequest $request, Dish_Type $dish_Type)
+    public function update(Request $request, $id)
     {
         $dish_Type = Dish_Type::find($id);
         $dish_Type->fill($request->except(['_token', '_method']));

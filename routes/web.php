@@ -51,11 +51,11 @@ Route::get('/children_type/delete', [ChildrenTypeController::class, 'cancel'])->
 Route::get('/ingredient', [IngredientController::class, 'index'])->name('ingredient.index');
 
 Route::get('/ingredient_type', [IngredientTypeController::class, 'index'])->name('ingredient_type.index');
-Route::get('/ingredient_type/create', [ChildrenTypeController::class, 'create'])->name('ingredient_type.create');
-Route::post('/ingredient_type/store', [ChildrenTypeController::class, 'store'])->name('ingredient_type.store');
-Route::get('/ingredient_type/edit/{id}', [ChildrenTypeController::class, 'edit'])->name('ingredient_type.edit');
-Route::put('/ingredient_type/edit/{id}', [ChildrenTypeController::class, 'update'])->name('ingredient_type.update');
-Route::get('/ingredient_type/delete', [ChildrenTypeController::class, 'cancel'])->name('ingredient_type.cancel');
+Route::get('/ingredient_type/create', [IngredientTypeController::class, 'create'])->name('ingredient_type.create');
+Route::post('/ingredient_type/store', [IngredientTypeController::class, 'store'])->name('ingredient_type.store');
+Route::get('/ingredient_type/edit/{id}', [IngredientTypeController::class, 'edit'])->name('ingredient_type.edit');
+Route::put('/ingredient_type/edit/{id}', [IngredientTypeController::class, 'update'])->name('ingredient_type.update');
+Route::get('/ingredient_type/delete', [IngredientTypeController::class, 'cancel'])->name('ingredient_type.cancel');
 
 
 

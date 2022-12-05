@@ -9,4 +9,6 @@ class Ingredient_Type extends Model
 {
     use HasFactory;
     public $table = "ingredient_type";
+    public $timestamps = false;
+    protected $fillable = ['name','description'];
 }
