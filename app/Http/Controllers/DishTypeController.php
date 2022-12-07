@@ -43,7 +43,7 @@ class DishTypeController extends Controller
      * @param  \App\Http\Requests\StoreDish_TypeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDish_TypeRequest $request)
+    public function store(Request $request)
     {
         $dish_type = new Dish_Type();
         $dish_type->fill($request->all());
