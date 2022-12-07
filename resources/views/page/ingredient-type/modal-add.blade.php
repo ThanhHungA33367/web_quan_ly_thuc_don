@@ -5,7 +5,7 @@ use App\Models\Ingredient_Type;
 <form action = '{{route('ingredient_type.store')}}'  method = 'post' >
     @csrf
     <div class="form-group mb-3">
-        <label for="simpleinput">Tên</label>
+        <label for="simpleinput">Nhóm thực phẩm</label>
         <input type="text" name="name" class="form-control">
     </div>
 

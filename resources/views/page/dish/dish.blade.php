@@ -17,7 +17,6 @@
                     {{ session()->get('message') }}
                 </div>
             @endif
-
         <div class='card-body'>
             <button  id="mediumButton"  onclick="Add()" class="btn btn-xs btn-info ">Thêm</button>
             <form class="float-right form-group form-inline">
@@ -28,40 +27,41 @@
             <table class="table table-bordered ">
                 <thead class="thead-dark">
                 <tr>
-
                     <th>#</th>
-                    <th>Nhóm thực phẩm</th>
-                    <th>Mô tả</th>
+                    <th>Tên</th>
+                    <th>Nhóm món ăn</th>
+                    <th>Tên bữa ăn</th>
+                    <th>Mô tả</th>
                     <th></th>
                     <th></th>
-
-
                 </tr>
                 </thead>
-                <?php $a = 1; ?>
+                <?php  $i = 1;?>
                 @foreach ($data as $each)
                     <tr>
                         <td>
-
-                            {{$a++}}
-
+                            {{$i++}}
                         </td>
                         <td>
                             {{ $each->name }}
                         </td>
                         <td>
-                            {{ $each->description }}
+                            {{ $each->dishtypename }}
+                        </td>
+                        <td>
+                            {{ $each->mealsname }}
                         </td>
 
+                        <td>
+                            {{ $each->description }}
+                        </td>
                         <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
                         </td>
                         <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
                         </td>
-
                     </tr>
-
 
                 @endforeach
 
@@ -85,7 +85,7 @@
     <script>
         function Add(){
             $.ajax({
-                url: `/ingredient_type/create`,
+                url: `/dish/create`,
                 method:"get",
                 data:{
 
@@ -108,10 +108,11 @@
                 },
                 timeout: 8000
             })
+
         }
         function Edit(id){
             $.ajax({
-                url: `/ingredient_type/edit/${id}`,
+                url: `/dish/edit/${id}`,
                 method:"get",
                 data:{
 
@@ -137,7 +138,7 @@
         }
         function Delete(id,_this){
             $.ajax({
-                url: `/ingredient_type/delete`,
+                url: `/dish_type/delete`,
                 method:"get",
                 data:{
                     id:id,
@@ -165,6 +166,5 @@
                 timeout: 8000
             })
         }
-
     </script>
 @endsection

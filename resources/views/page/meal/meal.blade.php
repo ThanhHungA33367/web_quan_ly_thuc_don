@@ -35,11 +35,11 @@
                     <th></th>
                 </tr>
                 </thead>
-
+                <?php  $i = 1;?>
                 @foreach ($data as $each)
                     <tr>
                         <td>
-                            {{ $each->id }}
+                            {{$i++}}
                         </td>
                         <td>
                             {{ $each->name }}
@@ -54,7 +54,7 @@
                             <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
                         </td>
                     </tr>
-                    
+
 
                 @endforeach
             </table>

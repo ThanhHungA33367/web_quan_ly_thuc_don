@@ -18,7 +18,7 @@ class ChildrenTypeController extends Controller
     {
         $search = $request-> get('q');
         $data = Children_Type::where('children_type.name','like','%'.$search.'%')
-            ->paginate(2)->appends(['q' => $search]);
+            ->paginate(10)->appends(['q' => $search]);
         return view('page.children-type.children_type',[
             'data' => $data,
             'search' => $search,

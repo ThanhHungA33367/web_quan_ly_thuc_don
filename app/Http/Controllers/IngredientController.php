@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ingredient;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
+use App\Models\Ingredient_Type;
 use Illuminate\Http\Request;
 
 class IngredientController extends Controller
@@ -21,7 +22,7 @@ class IngredientController extends Controller
             ->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
             ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
             ->paginate(2)->appends(['q' => $search]);
-        return view('page.ingredients',[
+        return view('page.ingredient.ingredient',[
             'data' => $data,
             'search' => $search,
         ]);
@@ -30,11 +31,16 @@ class IngredientController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $ingredient_type_data = Ingredient_Type::get();
+
+        return view('page.ingredient.modal-add',[
+            'ingredient_type_data' => $ingredient_type_data,
+
+        ]);
     }
 
     /**
@@ -43,9 +49,12 @@ class IngredientController extends Controller
      * @param  \App\Http\Requests\StoreIngredientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreIngredientRequest $request)
+    public function store(Request $request)
     {
-        //
+        $ingredient = new Ingredient();
+        $ingredient->fill($request->all());
+        $ingredient->save();
+        return redirect()->route('ingredient.index')->with('message', 'Thêm thành công!');
     }
 
     /**
@@ -65,9 +74,16 @@ class IngredientController extends Controller
      * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ingredient $ingredient)
+    public function edit($id)
     {
-        //
+        $object = Ingredient::where('id', '=', $id)->first();
+        $ingredient_type_data = Ingredient_Type::get();
+
+        return view('page.ingredient.modal-edit',[
+            'object' => $object,
+            'ingredient_type_data' => $ingredient_type_data,
+
+        ]);
     }
 
     /**
@@ -77,9 +93,12 @@ class IngredientController extends Controller
      * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
+    public function update(Request $request, $id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+        $ingredient->fill($request->except(['_token', '_method']));
+        $ingredient->save();
+        return redirect()->route('ingredient.index')->with('message', 'Sửa thành công!');
     }
 
     /**
@@ -91,5 +110,9 @@ class IngredientController extends Controller
     public function destroy(Ingredient $ingredient)
     {
         //
+    }
+    public function cancel(Request $request)
+    {
+        Ingredient::destroy($request->id);
     }
 }

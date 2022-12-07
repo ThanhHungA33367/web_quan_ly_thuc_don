@@ -26,6 +26,11 @@ Route::get('/layout', function () {
     return view('layout');
 });
 Route::get('/dish', [DishController::class, 'index'])->name('dish.index');
+Route::get('/dish/create', [DishController::class, 'create'])->name('dish.create');
+Route::post('/dish/store', [DishController::class, 'store'])->name('dish.store');
+Route::get('/dish/edit/{id}', [DishController::class, 'edit'])->name('dish.edit');
+Route::put('/dish/edit/{id}', [DishController::class, 'update'])->name('dish.update');
+Route::get('/dish_type/delete', [DishTypeController::class, 'cancel'])->name('dish_type.cancel');
 
 Route::get('/dish_type', [DishTypeController::class, 'index'])->name('dish_type.index');
 Route::get('/dish_type/create', [DishTypeController::class, 'create'])->name('dish_type.create');
@@ -49,13 +54,18 @@ Route::put('/children_type/edit/{id}', [ChildrenTypeController::class, 'update']
 Route::get('/children_type/delete', [ChildrenTypeController::class, 'cancel'])->name('children_type.cancel');
 
 Route::get('/ingredient', [IngredientController::class, 'index'])->name('ingredient.index');
+Route::get('/ingredient/create', [IngredientController::class, 'create'])->name('ingredient.create');
+Route::post('/ingredient/store', [IngredientController::class, 'store'])->name('ingredient.store');
+Route::get('/ingredient/edit/{id}', [IngredientController::class, 'edit'])->name('ingredient.edit');
+Route::put('/ingredient/edit/{id}', [IngredientController::class, 'update'])->name('ingredient.update');
+Route::get('/ingredient/delete', [IngredientController::class, 'cancel'])->name('ingredient.cancel');
 
 Route::get('/ingredient_type', [IngredientTypeController::class, 'index'])->name('ingredient_type.index');
-Route::get('/ingredient_type/create', [ChildrenTypeController::class, 'create'])->name('ingredient_type.create');
-Route::post('/ingredient_type/store', [ChildrenTypeController::class, 'store'])->name('ingredient_type.store');
-Route::get('/ingredient_type/edit/{id}', [ChildrenTypeController::class, 'edit'])->name('ingredient_type.edit');
-Route::put('/ingredient_type/edit/{id}', [ChildrenTypeController::class, 'update'])->name('ingredient_type.update');
-Route::get('/ingredient_type/delete', [ChildrenTypeController::class, 'cancel'])->name('ingredient_type.cancel');
+Route::get('/ingredient_type/create', [IngredientTypeController::class, 'create'])->name('ingredient_type.create');
+Route::post('/ingredient_type/store', [IngredientTypeController::class, 'store'])->name('ingredient_type.store');
+Route::get('/ingredient_type/edit/{id}', [IngredientTypeController::class, 'edit'])->name('ingredient_type.edit');
+Route::put('/ingredient_type/edit/{id}', [IngredientTypeController::class, 'update'])->name('ingredient_type.update');
+Route::get('/ingredient_type/delete', [IngredientTypeController::class, 'cancel'])->name('ingredient_type.cancel');
 
 
 
