@@ -39,12 +39,12 @@
 
                 </tr>
                 </thead>
-                <?php $i = 1;
-                ?>
+                <?php  $i = 0;?>
                 @foreach ($data as $each)
                     <tr>
                         <td>
-                            {{ i++ }}
+                           {{$i++}}
+
                         </td>
                         <td>
                             {{ $each->name }}
@@ -100,6 +100,7 @@
                 success: function(res) {
                     $("#detail").html(res)
                     $('#mediumModal').modal("show");
+
                 },
                 complete: function() {
                     $('#loader').hide();

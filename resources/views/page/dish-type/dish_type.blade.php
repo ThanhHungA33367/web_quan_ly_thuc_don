@@ -35,12 +35,11 @@
                     <th></th>
                 </tr>
                 </thead>
-                <?php $i = 1;
-                ?>
+                <?php  $i = 1;?>
                 @foreach ($data as $each)
                     <tr>
                         <td>
-                            {{ i++ }}
+                            {{$i++}}
                         </td>
                         <td>
                             {{ $each->name }}

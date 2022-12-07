@@ -29,29 +29,22 @@
                 <thead class="thead-dark">
                 <tr>
                     <th>#</th>
-                    <th>Nhó</th>
-                    <th>Mô tả</th>
+                    <th>Nhóm thực phẩm</th>
                     <th>Kalo/ngày</th>
-
                     <th></th>
                     <th></th>
 
 
                 </tr>
                 </thead>
-
-                <?php $i = 1;
-                ?>
+                <?php  $i = 1;?>
                 @foreach ($data as $each)
                     <tr>
                         <td>
-                            {{ i++ }}
+                            {{$i++}}
                         </td>
                         <td>
                             {{ $each->name }}
-                        </td>
-                        <td>
-                            {{ $each->description }}
                         </td>
                         <td>
                             {{ $each->kalo_day }}

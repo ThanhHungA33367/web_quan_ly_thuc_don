@@ -59,7 +59,7 @@ class DishTypeController extends Controller
      */
     public function show(Dish_Type $dish_Type)
     {
-        
+
     }
 
     /**

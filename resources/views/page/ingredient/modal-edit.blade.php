@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Dish_Type;
 ?>
-<form action = '{{route('dish_type.update',$object->id)}}'  method="post" enctype="multipart/form-data">
+<form action = '{{route('ingredient.update',$object->id)}}'  method="post" enctype="multipart/form-data">
     @csrf
 
     @method('put')
@@ -12,9 +12,18 @@ use App\Models\Dish_Type;
     </div>
 
     <div class="form-group mb-3">
-        <label for="example-email">Mô tả</label>
-        <input type="text" name="description"  class="form-control" value="{{$object->description}}">
+        <label for="example-email">Kalo/Day</label>
+        <input type="text" name="kalo_day"  class="form-control" value="{{$object->kalo_day}}" >
     </div>
+    <label for="example-email">Nhóm thực phẩm</label>
+    <select class="custom-select mb-3" name="ingredient_type_id">
+
+        @foreach($ingredient_type_data as $each)
+            <option value="{{$each->id}}" {{ ( $each->id === $object->ingredient_type_id) ? 'selected' : '' }}>
+                {{$each->name}}
+            </option>
+        @endforeach
+    </select>
 
     <button class="btn btn-info" >Sửa</button>
 
