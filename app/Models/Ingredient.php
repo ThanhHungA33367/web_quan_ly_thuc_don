@@ -10,5 +10,5 @@ class Ingredient extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['ingredient_type_id','name','kalo_day'];
+    protected $fillable = ['ingredient_type_id','name','kalo_day', 'protein', 'lipid', 'carb', 'cost'];
 }

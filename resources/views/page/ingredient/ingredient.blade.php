@@ -30,7 +30,11 @@
                 <tr>
                     <th>#</th>
                     <th>Nhóm thực phẩm</th>
-                    <th>Kalo/ngày</th>
+                    <th>Kalo/100g</th>
+                    <th>Chất đạm/100g</th>
+                    <th>Chất béo/100g</th>
+                    <th>Tinh bột/100g</th>
+                    <th>Đơn giá/100g</th>
                     <th></th>
                     <th></th>
 
@@ -48,6 +52,18 @@
                         </td>
                         <td>
                             {{ $each->kalo_day }}
+                        </td>
+                        <td>
+                            {{ $each->protein }}
+                        </td>
+                        <td>
+                            {{ $each->lipid }}
+                        </td>
+                        <td>
+                            {{ $each->carb }}
+                        </td>
+                        <td>
+                            {{ $each->cost }}
                         </td>
 
                         <td width = 150 style="text-align: center">
