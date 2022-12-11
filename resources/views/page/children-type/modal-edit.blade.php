@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Children_Type;
 ?>
-<form action = '{{route('children_type.update',$object->id)}}'  method="post" enctype="multipart/form-data">
+<form action='{{route('children_type.update',$object->id)}}' method="post" enctype="multipart/form-data">
     @csrf
 
     @method('put')
@@ -13,11 +15,11 @@ use App\Models\Children_Type;
 
     <div class="form-group mb-3">
         <label for="example-email">Mô tả</label>
-        <input type="text" name="description"  class="form-control" value="{{$object->description}}">
+        <input type="text" name="description" class="form-control" value="{{$object->description}}">
     </div>
 
     <div class="form-group mb-3">
-        <label for="example-password">Kalo/Ngày</label>
+        <label for="example-password">Kalo trong một ngày</label>
         <input type="text" name="kalo_day" class="form-control" value="{{$object->kalo_day}}">
     </div>
     <div class="form-group mb-3">
@@ -36,6 +38,6 @@ use App\Models\Children_Type;
         <label for="example-password">Số tiền ăn một ngày</label>
         <input type="text" name="cost" class="form-control" value="{{$object->cost}}">
     </div>
-    <button class="btn btn-info" >Sửa</button>
+    <button class="btn btn-info">Sửa</button>
 
 </form>
