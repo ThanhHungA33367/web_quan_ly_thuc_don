@@ -36,3 +36,4 @@ use App\Models\Dish;
     </div>
     <button class="btn btn-info" >Thêm</button>
 </form>
+

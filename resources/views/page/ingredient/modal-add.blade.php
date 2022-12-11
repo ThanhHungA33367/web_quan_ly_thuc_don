@@ -23,8 +23,33 @@ use App\Models\Dish_Type;
     </select>
     </div>
 
+    <div class="form-group mb-3">
+        <label for="example-email">Kalo trên 100g</label>
+        <input type="text" name="kalo_day"  class="form-control" >
+    </div>
 
+
+    <div class="form-group mb-3">
+        <label for="example-password">Chất đậm trên 100g</label>
+        <input type="text" name="protein" class="form-control" >
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="example-password">Chất béo trên 100g</label>
+        <input type="text" name="lipid" class="form-control" >
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="example-password">Tinh bột trên 100g</label>
+        <input type="text" name="carb" class="form-control" >
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="example-password">Giá tiền trên 100g</label>
+        <input type="text" name="cost" class="form-control" >
+    </div>
     <button class="btn btn-info" >Thêm</button>
 
 </form>
+
 

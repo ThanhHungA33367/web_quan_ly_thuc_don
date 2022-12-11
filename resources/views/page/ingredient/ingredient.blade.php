@@ -30,7 +30,11 @@
                 <tr>
                     <th>#</th>
                     <th>Nhóm thực phẩm</th>
-                    <th>Kalo/ngày</th>
+                    <th>Kalo/100g</th>
+                    <th>Chất đạm/100g</th>
+                    <th>Chất béo/100g</th>
+                    <th>Tinh bột/100g</th>
+                    <th>Đơn giá/100g</th>
                     <th></th>
                     <th></th>
 
