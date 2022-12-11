@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Dish;
 use App\Http\Requests\StoreDishRequest;
 use App\Http\Requests\UpdateDishRequest;
+use App\Models\Dish_Ingredient;
 use App\Models\Dish_Type;
+use App\Models\Ingredient;
 use App\Models\Meal;
+use DishIngredient;
 use Illuminate\Http\Request;
 
 class DishController extends Controller
@@ -46,6 +49,16 @@ class DishController extends Controller
            'meal_data' => $meal_data,
        ]);
     }
+    public function create_ingredient_dish($id)
+    {
+        $object = Dish::where('id', '=', $id)->first();
+        $ingredient = Ingredient::get();
+        return view('page.dish.modal-add-dish-ingredient',[
+            'object' => $object,
+            'ingredient' => $ingredient,
+
+        ]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -58,6 +71,25 @@ class DishController extends Controller
         $dish = new Dish();
         $dish->fill($request->all());
         $dish->save();
+        return redirect()->route('dish.index')->with('message', 'Thêm thành công!');
+    }
+    public function store_ingredient_dish(Request $request,$id): \Illuminate\Http\RedirectResponse
+    {
+            $ingredient = $request->all();
+             $leads = $ingredient['dish_id'];
+             $ingredients = $ingredient['ingredient_id'];
+             $quantity = $ingredient['quantity'];
+
+        foreach($leads as $key => $input) {
+            $scores = new Dish_Ingredient();
+            $scores->dish_id = $id;
+            $scores->ingredient_id = isset($ingredients[$key]) ? $ingredients[$key] : ''; //add a default value here
+            $scores->quantity = isset($quantity [$key]) ? $quantity [$key] : ''; //add a default value here
+            $scores->save();
+        }
+//        $ingredient = new Dish_Ingredient();
+//        $ingredient->fill($request->all());
+//        $ingredient->save();
         return redirect()->route('dish.index')->with('message', 'Thêm thành công!');
     }
 

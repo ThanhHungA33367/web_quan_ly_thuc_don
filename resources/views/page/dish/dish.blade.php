@@ -34,6 +34,7 @@
                     <th>Mô tả</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <?php  $i = 1;?>
@@ -56,11 +57,15 @@
                             {{ $each->description }}
                         </td>
                         <td width = 150 style="text-align: center">
+                            <button  id="mediumButton"  onclick="Add_Ingredient({{$each->id}})" class="btn btn-xs btn-info ">Thêm thành phần</button>
+                        </td>
+                        <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
                         </td>
                         <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
                         </td>
+
                     </tr>
 
                 @endforeach
@@ -83,6 +88,33 @@
                 </div>
             </div>
     <script>
+        function Add_Ingredient(id){
+            $.ajax({
+                url: `/dish/create_ingredient_dish/${id}`,
+                method:"get",
+                data:{
+
+                },
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                // return the result
+                success: function(res) {
+                    $("#detail").html(res)
+                    $('#mediumModal').modal("show");
+                },
+                complete: function() {
+                    $('#loader').hide();
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    // alert("Page " + href + " cannot open. Error:" + error);
+                    // $('#loader').hide();
+                },
+                timeout: 8000
+            })
+
+        }
         function Add(){
             $.ajax({
                 url: `/dish/create`,

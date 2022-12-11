@@ -10,6 +10,10 @@ use App\Models\Dish;
         <label for="simpleinput">Tên</label>
         <input type="text" name="name" class="form-control" value="{{$object->name}}">
     </div>
+    <div class="form-group mb-3">
+        <label for="simpleinput">Tên</label>
+        <input type="text" name="name" class="form-control" value="{{$object->name}}">
+    </div>
 
     <label for="example-email">Nhóm món ăn</label>
     <select class="custom-select mb-3" name="dish_type_id">

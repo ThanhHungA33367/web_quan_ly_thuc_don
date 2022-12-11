@@ -36,12 +36,13 @@ class IngredientController extends Controller
     public function create()
     {
         $ingredient_type_data = Ingredient_Type::get();
-
         return view('page.ingredient.modal-add',[
             'ingredient_type_data' => $ingredient_type_data,
 
         ]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -56,6 +57,7 @@ class IngredientController extends Controller
         $ingredient->save();
         return redirect()->route('ingredient.index')->with('message', 'Thêm thành công!');
     }
+
 
     /**
      * Display the specified resource.
@@ -72,7 +74,8 @@ class IngredientController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($id)
     {

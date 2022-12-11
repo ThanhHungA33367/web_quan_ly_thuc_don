@@ -27,7 +27,10 @@ Route::get('/layout', function () {
 });
 Route::get('/dish', [DishController::class, 'index'])->name('dish.index');
 Route::get('/dish/create', [DishController::class, 'create'])->name('dish.create');
+Route::get('/dish/create_ingredient_dish/{id}', [DishController::class, 'create_ingredient_dish'])->name('dish.create_ingredient_dish');
 Route::post('/dish/store', [DishController::class, 'store'])->name('dish.store');
+Route::post('/dish/store_ingredient_dish/{id}', [DishController::class, 'store_ingredient_dish'])->name('dish.store_ingredient_dish');
+
 Route::get('/dish/edit/{id}', [DishController::class, 'edit'])->name('dish.edit');
 Route::put('/dish/edit/{id}', [DishController::class, 'update'])->name('dish.update');
 Route::get('/dish_type/delete', [DishTypeController::class, 'cancel'])->name('dish_type.cancel');
