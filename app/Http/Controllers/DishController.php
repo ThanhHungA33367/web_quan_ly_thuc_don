@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDishRequest;
 use App\Models\Dish_Ingredient;
 use App\Models\Dish_Type;
 use App\Models\Ingredient;
+use App\Models\Ingredient_Type;
 use App\Models\Meal;
 use DishIngredient;
 use Illuminate\Http\Request;
@@ -52,10 +53,15 @@ class DishController extends Controller
     public function create_ingredient_dish($id)
     {
         $object = Dish::where('id', '=', $id)->first();
-        $ingredient = Ingredient::get();
+        $ingredient1 = Ingredient_Type::all();
+        $ingredient = Ingredient::query()->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
+            ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
+            ->get();
         return view('page.dish.modal-add-dish-ingredient',[
             'object' => $object,
             'ingredient' => $ingredient,
+            'ingredient1' => $ingredient1,
+
 
         ]);
     }
