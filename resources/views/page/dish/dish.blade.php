@@ -89,6 +89,7 @@
             </div>
     <script>
         function Add_Ingredient(id){
+            $('#mediumModal').modal({backdrop: 'static', keyboard: false})
             $.ajax({
                 url: `/dish/create_ingredient_dish/${id}`,
                 method:"get",

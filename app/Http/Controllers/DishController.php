@@ -79,16 +79,18 @@ class DishController extends Controller
         $dish->save();
         return redirect()->route('dish.index')->with('message', 'Thêm thành công!');
     }
-    public function store_ingredient_dish(Request $request,$id): \Illuminate\Http\RedirectResponse
+
+    public function store_ingredient_dish(Request $request)
     {
-            $ingredient = $request->all();
+            $ingredient = $request->except(['_token']);
+            $ingredients = $ingredient['ingredient_id'];
              $leads = $ingredient['dish_id'];
-             $ingredients = $ingredient['ingredient_id'];
+             $lead = $ingredient['id_dish'];
              $quantity = $ingredient['quantity'];
 
         foreach($leads as $key => $input) {
             $scores = new Dish_Ingredient();
-            $scores->dish_id = $id;
+            $scores->dish_id = isset($lead[$key]) ? $lead[$key] : '';
             $scores->ingredient_id = isset($ingredients[$key]) ? $ingredients[$key] : ''; //add a default value here
             $scores->quantity = isset($quantity [$key]) ? $quantity [$key] : ''; //add a default value here
             $scores->save();
@@ -96,18 +98,25 @@ class DishController extends Controller
 //        $ingredient = new Dish_Ingredient();
 //        $ingredient->fill($request->all());
 //        $ingredient->save();
-        return redirect()->route('dish.index')->with('message', 'Thêm thành công!');
+        return $this->show($ingredient['id_dish']);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Dish  $dish
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(Dish $dish)
+    public function show($id)
     {
-        //
+        $object = Dish_Ingredient::query()->join('ingredients','ingredient_id','=','ingredients.id')
+        ->select('ingredients.name as ingredients_name','dish_ingredient.*')
+            ->where('dish_ingredient.dish_id','=',$id)
+        ->get();
+        return view('page.dish.showIngredient', [
+            'object' => $object,
+        ]);
     }
 
     /**
@@ -158,4 +167,18 @@ class DishController extends Controller
     {
         Dish_Type::destroy($request->id);
     }
+    public function getIngredient($ingredient_type_id)
+    {
+       $ingredient = Ingredient::where('ingredient_type_id','=',$ingredient_type_id)->get();
+       return view('page.dish.selectIngredient',
+       [
+           'ingredient' => $ingredient,
+       ]);
+    }
+    public function deleteIngredient(Request $request): void
+    {
+        Dish_Ingredient::destroy($request->id);
+
+    }
+
 }
