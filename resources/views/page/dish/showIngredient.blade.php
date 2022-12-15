@@ -25,7 +25,7 @@
 
 <script>
     function Delete1(id,_this){
-        var result = confirm("Bạn có chắc muốn xóa  không?");
+        var result = confirm("Bạn có chắc muốn xóa không?");
         if (result) {
             $.ajax({
                 url: `/dish/delete_ingredient`,
@@ -53,12 +53,7 @@
                 timeout: 8000
             })
 
-
-
-
         }
-
-
         }
 
 </script>
