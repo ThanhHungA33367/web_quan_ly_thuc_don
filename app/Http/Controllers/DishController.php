@@ -52,6 +52,11 @@ class DishController extends Controller
     }
     public function create_ingredient_dish($id)
     {
+        $object1 = Dish_Ingredient::query()->join('ingredients','ingredient_id','=','ingredients.id')
+            ->select('ingredients.name as ingredients_name','dish_ingredient.*')
+            ->where('dish_ingredient.dish_id','=',$id)
+            ->get();
+
         $object = Dish::where('id', '=', $id)->first();
         $ingredient1 = Ingredient_Type::all();
         $ingredient = Ingredient::query()->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
@@ -61,6 +66,7 @@ class DishController extends Controller
             'object' => $object,
             'ingredient' => $ingredient,
             'ingredient1' => $ingredient1,
+            'object1' => $object1
 
 
         ]);
