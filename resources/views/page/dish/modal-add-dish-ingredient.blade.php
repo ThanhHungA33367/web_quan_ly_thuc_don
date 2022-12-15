@@ -81,6 +81,5 @@ use App\Models\Dish;
             }
         });
     })
-
-
+    
 </script>
