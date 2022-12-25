@@ -14,12 +14,8 @@ use App\Models\Dish;
     </div>
 
     <?php  $a = 1 ?>
-
     <div class="form-group mt-3">
-        <label for="example-email">Thành phần món ăn</label>
-
-        <input type="hidden" name="dish_id[]" value="{{$object->id}}">
-        <input type="hidden" name="id_dish" value="{{$object->id}}">
+        <label> Nhom thuc pham </label>
         <label>
             <select id="provinces"  class="custom-select">
                 <option selected disabled>Chọn nhóm</option>
@@ -28,6 +24,13 @@ use App\Models\Dish;
                 @endforeach
             </select>
         </label>
+        </div>
+    <div class="form-group mt-3">
+        <label for="example-email">Thành phần món ăn</label>
+        <input type="hidden" name="dish_id[]" value="{{$object->id}}">
+        <input type="hidden" name="id_dish" value="{{$object->id}}">
+        
+        
 
     @for($i = 0; $i < $a ; $i++)
     </div>
@@ -42,8 +45,8 @@ use App\Models\Dish;
 <div id="show">
     <table>
         <tr>
-            <th >thực phẩm</th> &nbsp; &nbsp;
-            <th style="padding-left: 50px">số lượng</th>
+            <th >Thực phẩm</th> &nbsp; &nbsp;
+            <th style="padding-left: 50px">Số lượng</th>
             <th style="margin-left: 50px"></th>
 
         </tr>
@@ -57,6 +60,10 @@ use App\Models\Dish;
                 </td>
                 <td>
                     <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Delete1({{$each->id}},this)" type="button">Xóa</button>
+                </td>
+                
+                <td>
+                    <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Update1({{$each->id}},this)" type="button">Sửa</button>
                 </td>
             </tr>
         @endforeach
@@ -135,8 +142,33 @@ use App\Models\Dish;
                 },
                 timeout: 8000
             })
-
         }
+    }
+
+    function Update1(id){
+        $.ajax({
+                url: `/dish/edit_dish_ingredient/${id}`,
+                method:"get",
+                data:{
+                },
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                // return the result
+                success: function(res) {
+                    $("#detail").html(res)
+                    $('#mediumModal').modal("show");
+                },
+                complete: function() {
+                    $('#loader').hide();
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    // alert("Page " + href + " cannot open. Error:" + error);
+                    // $('#loader').hide();
+                },
+                timeout: 8000
+            })
     }
 
 </script>

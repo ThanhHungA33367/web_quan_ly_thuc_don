@@ -36,7 +36,8 @@ Route::get('/dish/edit/{id}', [DishController::class, 'edit'])->name('dish.edit'
 Route::put('/dish/edit/{id}', [DishController::class, 'update'])->name('dish.update');
 Route::get('/dish/delete_ingredient', [DishController::class, 'deleteIngredient'])->name('dish.deleteIngredient');
 Route::get('/dish_type/delete', [DishTypeController::class, 'cancel'])->name('dish_type.cancel');
-
+Route::put('/dish/edit_dish_ingredient/{id}', [DishController::class, 'update_ingredient_dish'])->name('edit_dish_ingredient.update');
+Route::get('/dish/edit_dish_ingredient/{id}', [DishController::class, 'edit_ingredient_dish'])->name('edit_dish_ingredient.edit');
 
 
 Route::get('/dish_type', [DishTypeController::class, 'index'])->name('dish_type.index');

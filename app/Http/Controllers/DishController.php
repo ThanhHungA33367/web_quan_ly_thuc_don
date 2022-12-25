@@ -67,8 +67,6 @@ class DishController extends Controller
             'ingredient' => $ingredient,
             'ingredient1' => $ingredient1,
             'object1' => $object1
-
-
         ]);
     }
 
@@ -84,6 +82,43 @@ class DishController extends Controller
         $dish->fill($request->all());
         $dish->save();
         return redirect()->route('dish.index')->with('message', 'Thêm thành công!');
+    }
+
+    public function update_ingredient_dish(Request $request, $id)
+      {
+        
+        $dish_ingredient = Dish_Ingredient::find($id);
+        $dish_ingredient->fill($request->except(['_token', '_method']));
+        $dish_ingredient->save();
+        $dish_id = $dish_ingredient->dish_id;
+        return redirect()//->back()->with('message', 'Sửa thành công!');
+        ->route('dish.create_ingredient_dish', $dish_id)->with('message', 'Sửa thành công!');
+
+        // $object1 = Dish_Ingredient::query()->join('ingredients','ingredient_id','=','ingredients.id')
+        //     ->select('ingredients.name as ingredients_name','dish_ingredient.*')
+        //     ->where('dish_ingredient.dish_id','=',$dish_ingredient->dish_id)
+        //     ->get();
+
+        // $object = Dish::where('id', '=', $dish_ingredient->dish_id)->first();
+        // $ingredient1 = Ingredient_Type::all();
+        // $ingredient = Ingredient::query()->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
+        //     ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
+        //     ->get();
+        // return view('page.dish.modal-add-dish-ingredient',[
+        //     'object' => $object,
+        //     'ingredient' => $ingredient,
+        //     'ingredient1' => $ingredient1,
+        //     'object1' => $object1
+        // ]);
+    }
+
+    public function edit_ingredient_dish($id){
+        $object = Dish_Ingredient::where('id', '=', $id)->first();
+        $ingredient = Ingredient::where('id', '=', $object->ingredient_id)->first();
+        return view('page.dish.model-add-dish-ingredient-edit',[
+            'object' => $object,
+            'ingredient' => $ingredient,
+        ]);
     }
 
     public function store_ingredient_dish(Request $request)

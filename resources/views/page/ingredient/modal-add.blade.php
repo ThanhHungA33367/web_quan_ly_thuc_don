@@ -29,7 +29,7 @@ use App\Models\Dish_Type;
 
 
     <div class="form-group mb-3">
-        <label for="example-password">Chất đậm trên 100g</label>
+        <label for="example-password">Chất đam trên 100g</label>
         <input type="text" name="protein" class="form-control">
     </div>
 
