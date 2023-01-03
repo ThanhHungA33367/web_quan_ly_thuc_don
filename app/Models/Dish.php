@@ -10,5 +10,5 @@ class Dish extends Model
     use HasFactory;
     public $table = "dishes";
     public $timestamps = false;
-    protected $fillable = ['dish_type_id','meal_id','name','description'];
+    protected $fillable = ['dish_type_id','children_type_id','name','description', 'kalo','protein', 'lipid', 'carb', 'cost'];
 }

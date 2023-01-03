@@ -2,11 +2,8 @@
 namespace App\Http\Controllers;
 use App\Models\Dish;
 ?>
-<form action = '{{route('dish.update',$object->id)}}'  method="post" enctype="multipart/form-data">
+<form>
     @csrf
-
-    @method('put')
-       
     <div class="form-group mb-3">
         <label for="simpleinput">Tên</label>
         <input type="text" name="name" class="form-control" value="{{$object->name}}">
@@ -21,6 +18,7 @@ use App\Models\Dish;
             </option>
         @endforeach
     </select>
+
     <label for="example-email">Nhóm trẻ</label>
     <select class="custom-select mb-3" name="children_type_id">
 
@@ -34,7 +32,29 @@ use App\Models\Dish;
         <label for="example-email">Mô tả</label>
         <input type="text" name="description"  class="form-control" value="{{$object->description}}">
     </div>
-    <button class="btn btn-info" >Sửa</button>
 
+    <div class="form-group mb-3">
+        <label for="example-email">Hàm lượng kalo</label>
+        <input type="text" name="kalo"  class="form-control" value="{{$object->kalo}}">
+    </div>
 
-</form>
+    <div class="form-group mb-3">
+        <label for="example-email">Hàm lượng chất đạm</label>
+        <input type="text" name="protein"  class="form-control" value="{{$object->protein}}">
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="example-email">Hàm lượng chất béo</label>
+        <input type="text" name="lipid"  class="form-control" value="{{$object->lipid}}">
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="example-email">Hàm lượng tinh bột</label>
+        <input type="text" name="carb"  class="form-control" value="{{$object->carb}}">
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="example-email">Giá tiền</label>
+        <input type="text" name="cost"  class="form-control" value="{{$object->cost}}">
+    </div>
+</form>    

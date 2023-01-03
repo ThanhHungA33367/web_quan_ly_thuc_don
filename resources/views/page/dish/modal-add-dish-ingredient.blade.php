@@ -5,7 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Dish;
 ?>
 
-
+@section('content')
+    <div class='card'>
+        @if ($errors->any())
+            <div class="card-header">
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
 <form id="form_add_ingredient" enctype= 'multipart/form-data'>
     @csrf
     <div class="form-group mb-3">
@@ -15,7 +32,7 @@ use App\Models\Dish;
 
     <?php  $a = 1 ?>
     <div class="form-group mt-3">
-        <label> Nhom thuc pham </label>
+        <label> Nhóm thực phẩm </label>
         <label>
             <select id="provinces"  class="custom-select">
                 <option selected disabled>Chọn nhóm</option>
@@ -61,10 +78,9 @@ use App\Models\Dish;
                 <td>
                     <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Delete1({{$each->id}},this)" type="button">Xóa</button>
                 </td>
-                
-                <td>
+                {{-- <td>
                     <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Update1({{$each->id}},this)" type="button">Sửa</button>
-                </td>
+                </td> --}}
             </tr>
         @endforeach
     </table>
@@ -145,30 +161,30 @@ use App\Models\Dish;
         }
     }
 
-    function Update1(id){
-        $.ajax({
-                url: `/dish/edit_dish_ingredient/${id}`,
-                method:"get",
-                data:{
-                },
-                beforeSend: function() {
-                    $('#loader').show();
-                },
-                // return the result
-                success: function(res) {
-                    $("#detail").html(res)
-                    $('#mediumModal').modal("show");
-                },
-                complete: function() {
-                    $('#loader').hide();
-                },
-                error: function(jqXHR, testStatus, error) {
-                    console.log(error);
-                    // alert("Page " + href + " cannot open. Error:" + error);
-                    // $('#loader').hide();
-                },
-                timeout: 8000
-            })
-    }
+    // function Update1(id){
+    //     $.ajax({
+    //             url: `/dish/edit_dish_ingredient/${id}`,
+    //             method:"get",
+    //             data:{
+    //             },
+    //             beforeSend: function() {
+    //                 $('#loader').show();
+    //             },
+    //             // return the result
+    //             success: function(res) {
+    //                 $("#detail").html(res)
+    //                 $('#mediumModal').modal("show");
+    //             },
+    //             complete: function() {
+    //                 $('#loader').hide();
+    //             },
+    //             error: function(jqXHR, testStatus, error) {
+    //                 console.log(error);
+    //                 // alert("Page " + href + " cannot open. Error:" + error);
+    //                 // $('#loader').hide();
+    //             },
+    //             timeout: 8000
+    //         })
+    // }
 
 </script>

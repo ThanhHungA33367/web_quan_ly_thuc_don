@@ -9,7 +9,7 @@ use App\Models\Dish_Ingredient;
 use App\Models\Dish_Type;
 use App\Models\Ingredient;
 use App\Models\Ingredient_Type;
-use App\Models\Meal;
+use App\Models\Children_Type;
 use DishIngredient;
 use Illuminate\Http\Request;
 
@@ -26,8 +26,8 @@ class DishController extends Controller
 
         $data = Dish::where('dishes.name','like','%'.$search.'%')
             ->join('dish_type','dish_type_id','=','dish_type.id')
-            ->join('meals','meal_id','=','meals.id')
-            ->select('dish_type.name as dishtypename','meals.name as mealsname','dishes.*')
+            ->join('children_type','children_type_id','=','children_type.id')
+            ->select('dish_type.name as dishtypename','children_type.name as childrentypename','dishes.*')
             ->paginate(10)->appends(['q' => $search]);
         return view('page.dish.dish',[
             'data' => $data,
@@ -44,10 +44,10 @@ class DishController extends Controller
     public function create()
     {
         $dish_type_data = Dish_Type::get();
-        $meal_data = Meal::get();
+        $children_type_data = Children_Type::get();
        return view('page.dish.modal-add',[
            'dish_type_data' => $dish_type_data,
-           'meal_data' => $meal_data,
+           'children_type_data' => $children_type_data,
        ]);
     }
     public function create_ingredient_dish($id)
@@ -84,58 +84,90 @@ class DishController extends Controller
         return redirect()->route('dish.index')->with('message', 'Thêm thành công!');
     }
 
-    public function update_ingredient_dish(Request $request, $id)
-      {
+    // public function update_ingredient_dish(Request $request, $id)
+    //   {
         
-        $dish_ingredient = Dish_Ingredient::find($id);
-        $dish_ingredient->fill($request->except(['_token', '_method']));
-        $dish_ingredient->save();
-        $dish_id = $dish_ingredient->dish_id;
-        return redirect()//->back()->with('message', 'Sửa thành công!');
-        ->route('dish.create_ingredient_dish', $dish_id)->with('message', 'Sửa thành công!');
+    //     $dish_ingredient = Dish_Ingredient::find($id);
+    //     $dish_id = $dish_ingredient->dish_id;
+    //     $dish_ingredient->fill($request->except(['_token', '_method']));
+    //     $dish_ingredient->save();
+    //     return redirect()//->back()->with('message', 'Sửa thành công!');
+    //     ->route('dish.create_ingredient_dish', $dish_id)->with('message', 'Sửa thành công!');
 
-        // $object1 = Dish_Ingredient::query()->join('ingredients','ingredient_id','=','ingredients.id')
-        //     ->select('ingredients.name as ingredients_name','dish_ingredient.*')
-        //     ->where('dish_ingredient.dish_id','=',$dish_ingredient->dish_id)
-        //     ->get();
+    //     $object1 = Dish_Ingredient::query()->join('ingredients','ingredient_id','=','ingredients.id')
+    //         ->select('ingredients.name as ingredients_name','dish_ingredient.*')
+    //         ->where('dish_ingredient.dish_id','=',$dish_ingredient->dish_id)
+    //         ->get();
 
-        // $object = Dish::where('id', '=', $dish_ingredient->dish_id)->first();
-        // $ingredient1 = Ingredient_Type::all();
-        // $ingredient = Ingredient::query()->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
-        //     ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
-        //     ->get();
-        // return view('page.dish.modal-add-dish-ingredient',[
-        //     'object' => $object,
-        //     'ingredient' => $ingredient,
-        //     'ingredient1' => $ingredient1,
-        //     'object1' => $object1
-        // ]);
-    }
+    //     $object = Dish::where('id', '=', $dish_ingredient->dish_id)->first();
+    //     $ingredient1 = Ingredient_Type::all();
+    //     $ingredient = Ingredient::query()->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
+    //         ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
+    //         ->get();
+    //     return view('page.dish.modal-add-dish-ingredient',[
+    //         'object' => $object,
+    //         'ingredient' => $ingredient,
+    //         'ingredient1' => $ingredient1,
+    //         'object1' => $object1
+    //     ]);
+    //}
 
-    public function edit_ingredient_dish($id){
-        $object = Dish_Ingredient::where('id', '=', $id)->first();
-        $ingredient = Ingredient::where('id', '=', $object->ingredient_id)->first();
-        return view('page.dish.model-add-dish-ingredient-edit',[
-            'object' => $object,
-            'ingredient' => $ingredient,
-        ]);
-    }
+    // public function edit_ingredient_dish($id){
+    //     $object = Dish_Ingredient::where('id', '=', $id)->first();
+    //     $ingredient = Ingredient::where('id', '=', $object->ingredient_id)->first();
+    //     return view('page.dish.model-add-dish-ingredient-edit',[
+    //         'object' => $object,
+    //         'ingredient' => $ingredient,
+    //     ]);
+    // }
 
     public function store_ingredient_dish(Request $request)
     {
             $ingredient = $request->except(['_token']);
-            $ingredients = $ingredient['ingredient_id'];
-             $leads = $ingredient['dish_id'];
-             $lead = $ingredient['id_dish'];
-             $quantity = $ingredient['quantity'];
 
-        foreach($leads as $key => $input) {
+            $leads = [];
+            $lead = [];
+            $quantity = [];
+            $ingredients = [];
+
+            $leads = $ingredient['dish_id'];
+            $lead = $ingredient['id_dish'];
+            $quantity = $ingredient['quantity'];
+            $ingredients = $ingredient['ingredient_id'];
+
             $scores = new Dish_Ingredient();
+        foreach($leads as $key => $input) {
+            
             $scores->dish_id = isset($lead[$key]) ? $lead[$key] : '';
             $scores->ingredient_id = isset($ingredients[$key]) ? $ingredients[$key] : ''; //add a default value here
             $scores->quantity = isset($quantity [$key]) ? $quantity [$key] : ''; //add a default value here
             $scores->save();
         }
+
+        $ingredient_cal = Ingredient::where('id', '=', $scores->ingredient_id)->first();
+ 
+        $kalo = $ingredient_cal->kalo_day/100*$scores->quantity;
+        $protein = $ingredient_cal->protein/100*$scores->quantity;
+        $lipid = $ingredient_cal->lipid/100*$scores->quantity;
+        $carb = $ingredient_cal->carb/100*$scores->quantity;
+        $cost = $ingredient_cal->cost/100*$scores->quantity;
+
+        $dish = Dish::where('id', '=', $scores->dish_id)->first();
+        $dish['kalo'] = $kalo + $dish->kalo;
+        $dish['protein'] = $protein + $dish->protein;
+        $dish['lipid']= $lipid + $dish->lipid;
+        $dish['carb'] = $carb + $dish->carb;
+        $dish['cost'] = $cost + $dish->cost;
+
+        // $dish_nutri = new Dish(); 
+        // $dish_nutri['kalo'] = $kalo_dish;
+        // $dish_nutri['protein'] = $protein_dish;
+        // $dish_nutri['lipid'] = $lipid_dish;
+        // $dish_nutri['carb'] = $carb_dish;
+        // $dish_nutri['cost'] = $cost_dish;
+
+        $dish->save();
+        
 //        $ingredient = new Dish_Ingredient();
 //        $ingredient->fill($request->all());
 //        $ingredient->save();
@@ -171,11 +203,22 @@ class DishController extends Controller
     {
         $object = Dish::where('id', '=', $id)->first();
         $dish_type_data = Dish_Type::get();
-        $meal_data = Meal::get();
+        $children_type_data = Children_Type::get();
         return view('page.dish.modal-edit',[
             'object' => $object,
             'dish_type_data' => $dish_type_data,
-           'meal_data' => $meal_data,
+           'children_type_data' => $children_type_data,
+        ]);
+    }
+
+    public function select($id){
+        $object = Dish::where('id', '=', $id)->first();
+        $dish_type_data = Dish_Type::get();
+        $children_type_data = Children_Type::get();
+        return view('page.dish.modal-select',[
+            'object' => $object,
+            'dish_type_data' => $dish_type_data,
+            'children_type_data' => $children_type_data,
         ]);
     }
 

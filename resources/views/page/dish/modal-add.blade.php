@@ -21,9 +21,9 @@ use App\Models\Dish;
         </select>
     </div>
     <div class="form-group mb-3">
-        <label for="example-email">Tên bữa ăn</label>
-        <select class="custom-select mb-3" name="meal_id">
-            @foreach($meal_data as $each)
+        <label for="example-email">Nhóm trẻ</label>
+        <select class="custom-select mb-3" name="children_type_id">
+            @foreach($children_type_data as $each)
                 <option value="{{$each->id}}">
                     {{$each->name}}
                 </option>
