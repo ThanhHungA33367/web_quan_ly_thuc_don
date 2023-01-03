@@ -1,13 +1,14 @@
 <div id="show">
     <table>
         <tr>
-        <th >thực phẩm</th> &nbsp; &nbsp;
-        <th style="padding-left: 50px">số lượng</th>
+        <th >Thực phẩm</th> &nbsp; &nbsp;
+        <th style="padding-left: 50px">Số lượng</th>
         <th style="margin-left: 50px"></th>
 
         </tr>
 @foreach($object as $each)
         <tr style="padding-top: 20px">
+            
             <td>
               {{$each->ingredients_name}}
             </td>

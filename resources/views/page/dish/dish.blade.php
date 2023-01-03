@@ -30,7 +30,7 @@
                     <th>#</th>
                     <th>Tên</th>
                     <th>Nhóm món ăn</th>
-                    <th>Tên bữa ăn</th>
+                    <th>Nhóm trẻ</th>
                     <th>Mô tả</th>
                     <th></th>
                     <th></th>
@@ -50,7 +50,7 @@
                             {{ $each->dishtypename }}
                         </td>
                         <td>
-                            {{ $each->mealsname }}
+                            {{ $each->childrentypename }}
                         </td>
 
                         <td>
@@ -58,6 +58,9 @@
                         </td>
                         <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Add_Ingredient({{$each->id}})" class="btn btn-xs btn-info ">Thêm thành phần</button>
+                        </td>
+                        <td width = 150 style="text-align: center">
+                            <button  id="mediumButton"  onclick="Select({{$each->id}})" class="btn btn-xs btn-info ">Xem</button>
                         </td>
                         <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
@@ -114,7 +117,32 @@
                 },
                 timeout: 8000
             })
+        }
+        function Select(id){
+            $.ajax({
+                url: `/dish/select/${id}`,
+                method:"get",
+                data:{
 
+                },
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                // return the result
+                success: function(res) {
+                    $("#detail").html(res)
+                    $('#mediumModal').modal("show");
+                },
+                complete: function() {
+                    $('#loader').hide();
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    // alert("Page " + href + " cannot open. Error:" + error);
+                    // $('#loader').hide();
+                },
+                timeout: 8000
+            })
         }
         function Add(){
             $.ajax({
@@ -141,7 +169,6 @@
                 },
                 timeout: 8000
             })
-
         }
         function Edit(id){
             $.ajax({
