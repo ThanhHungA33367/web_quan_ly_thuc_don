@@ -6,11 +6,11 @@ use App\Models\Dish;
     @csrf
     <div class="form-group mb-3">
         <label for="simpleinput">Tên</label>
-        <input type="text" name="name" class="form-control" value="{{$object->name}}">
+        <input type="text" name="name" class="form-control" value="{{$object->name}}" readonly>
     </div>
 
     <label for="example-email">Nhóm món ăn</label>
-    <select class="custom-select mb-3" name="dish_type_id">
+    <select class="custom-select mb-3" name="dish_type_id" >
 
         @foreach($dish_type_data as $each)
             <option value="{{$each->id}}" {{ ( $each->id === $object->dish_type_id) ? 'selected' : '' }}>
@@ -30,31 +30,31 @@ use App\Models\Dish;
     </select>
     <div class="form-group mb-3">
         <label for="example-email">Mô tả</label>
-        <input type="text" name="description"  class="form-control" value="{{$object->description}}">
+        <input type="text" name="description"  class="form-control" value="{{$object->description}}" readonly>
     </div>
 
     <div class="form-group mb-3">
         <label for="example-email">Hàm lượng kalo</label>
-        <input type="text" name="kalo"  class="form-control" value="{{$object->kalo}}">
+        <input type="text" name="kalo"  class="form-control" value="{{$object->kalo}}" readonly>
     </div>
 
     <div class="form-group mb-3">
         <label for="example-email">Hàm lượng chất đạm</label>
-        <input type="text" name="protein"  class="form-control" value="{{$object->protein}}">
+        <input type="text" name="protein"  class="form-control" value="{{$object->protein}}" readonly>
     </div>
 
     <div class="form-group mb-3">
         <label for="example-email">Hàm lượng chất béo</label>
-        <input type="text" name="lipid"  class="form-control" value="{{$object->lipid}}">
+        <input type="text" name="lipid"  class="form-control" value="{{$object->lipid}}" readonly>
     </div>
 
     <div class="form-group mb-3">
         <label for="example-email">Hàm lượng tinh bột</label>
-        <input type="text" name="carb"  class="form-control" value="{{$object->carb}}">
+        <input type="text" name="carb"  class="form-control" value="{{$object->carb}}" readonly>
     </div>
 
     <div class="form-group mb-3">
         <label for="example-email">Giá tiền</label>
-        <input type="text" name="cost"  class="form-control" value="{{$object->cost}}">
+        <input type="text" name="cost"  class="form-control" value="{{$object->cost}}" readonly>
     </div>
-</form>    
+</form>

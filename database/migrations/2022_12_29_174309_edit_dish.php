@@ -21,7 +21,7 @@ class EditDish extends Migration
             $table->integer('cost')->default(0)->change();
             $table->dropForeign(['meal_id']);
             $table->dropColumn('meal_id');
-            $table->integer('children_type_id');
+            $table->bigInteger('children_type_id')->unsigned()->nullable();
             $table->foreign('children_type_id')->references('id')->on('children_type_id');
         });
     }

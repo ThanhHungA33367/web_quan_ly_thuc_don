@@ -86,7 +86,7 @@ class DishController extends Controller
 
     // public function update_ingredient_dish(Request $request, $id)
     //   {
-        
+
     //     $dish_ingredient = Dish_Ingredient::find($id);
     //     $dish_id = $dish_ingredient->dish_id;
     //     $dish_ingredient->fill($request->except(['_token', '_method']));
@@ -125,10 +125,10 @@ class DishController extends Controller
     {
             $ingredient = $request->except(['_token']);
 
-            $leads = [];
-            $lead = [];
-            $quantity = [];
-            $ingredients = [];
+        $leads = [];
+        $lead = [];
+        $quantity = [];
+        $ingredients = [];
 
             $leads = $ingredient['dish_id'];
             $lead = $ingredient['id_dish'];
@@ -137,7 +137,7 @@ class DishController extends Controller
 
             $scores = new Dish_Ingredient();
         foreach($leads as $key => $input) {
-            
+
             $scores->dish_id = isset($lead[$key]) ? $lead[$key] : '';
             $scores->ingredient_id = isset($ingredients[$key]) ? $ingredients[$key] : ''; //add a default value here
             $scores->quantity = isset($quantity [$key]) ? $quantity [$key] : ''; //add a default value here
@@ -145,12 +145,13 @@ class DishController extends Controller
         }
 
         $ingredient_cal = Ingredient::where('id', '=', $scores->ingredient_id)->first();
- 
+
         $kalo = $ingredient_cal->kalo_day/100*$scores->quantity;
         $protein = $ingredient_cal->protein/100*$scores->quantity;
         $lipid = $ingredient_cal->lipid/100*$scores->quantity;
         $carb = $ingredient_cal->carb/100*$scores->quantity;
         $cost = $ingredient_cal->cost/100*$scores->quantity;
+
 
         $dish = Dish::where('id', '=', $scores->dish_id)->first();
         $dish['kalo'] = $kalo + $dish->kalo;
@@ -159,7 +160,7 @@ class DishController extends Controller
         $dish['carb'] = $carb + $dish->carb;
         $dish['cost'] = $cost + $dish->cost;
 
-        // $dish_nutri = new Dish(); 
+        // $dish_nutri = new Dish();
         // $dish_nutri['kalo'] = $kalo_dish;
         // $dish_nutri['protein'] = $protein_dish;
         // $dish_nutri['lipid'] = $lipid_dish;
@@ -167,7 +168,7 @@ class DishController extends Controller
         // $dish_nutri['cost'] = $cost_dish;
 
         $dish->save();
-        
+
 //        $ingredient = new Dish_Ingredient();
 //        $ingredient->fill($request->all());
 //        $ingredient->save();
@@ -261,7 +262,36 @@ class DishController extends Controller
     }
     public function deleteIngredient(Request $request): void
     {
+
+        $dish_ingredient = Dish_Ingredient::where('id', '=', $request->id)->first();
+        $ingredient_cal = Ingredient::where('id', '=', $dish_ingredient->ingredient_id)->first();
+
+        $protein = $ingredient_cal->protein/100*$dish_ingredient->quantity;
+        $kalo = $ingredient_cal->kalo_day/100*$dish_ingredient->quantity;
+        $lipid = $ingredient_cal->lipid/100*$dish_ingredient->quantity;
+        $carb = $ingredient_cal->carb/100*$dish_ingredient->quantity;
+        $cost = $ingredient_cal->cost/100*$dish_ingredient->quantity;
+
+
+        $dish = Dish::where('id', '=', $dish_ingredient->dish_id)->first();
+        $dish['kalo'] = $dish->kalo - $kalo ;
+        $dish['protein'] = $dish->protein - $protein;
+        $dish['lipid']= $dish->lipid - $lipid ;
+        $dish['carb'] = $dish->carb - $carb  ;
+        $dish['cost'] =  $dish->cost - $cost ;
+
+
+        $dish->save();
+
         Dish_Ingredient::destroy($request->id);
+
+
+
+
+
+
+
+
 
     }
 

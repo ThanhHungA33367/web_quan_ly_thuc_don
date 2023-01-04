@@ -13,13 +13,8 @@ class UpdateChildrenTypeTable extends Migration
      */
     public function up()
     {
-        Schema::table('children_type', function (Blueprint $table) {
-            $table->string('description')->nullable()->change();
-            $table->integer('protein');
-            $table->integer('lipid');
-            $table->integer('carb');
-            $table->integer('cost');
-        });
+
+
     }
 
     /**

@@ -14,12 +14,7 @@ class UpdateIngredientTable extends Migration
     public function up()
     {
 
-        Schema::table('ingredients', function (Blueprint $table) {
-            $table->integer('protein');
-            $table->integer('lipid');
-            $table->integer('carb');
-            $table->integer('cost');
-        });
+
     }
 
     /**

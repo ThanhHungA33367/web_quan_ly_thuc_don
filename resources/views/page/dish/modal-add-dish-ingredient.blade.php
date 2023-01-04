@@ -33,6 +33,7 @@ use App\Models\Dish;
     <?php  $a = 1 ?>
     <div class="form-group mt-3">
         <label> Nhóm thực phẩm </label>
+        <Br>
         <label>
             <select id="provinces"  class="custom-select">
                 <option selected disabled>Chọn nhóm</option>
@@ -46,8 +47,8 @@ use App\Models\Dish;
         <label for="example-email">Thành phần món ăn</label>
         <input type="hidden" name="dish_id[]" value="{{$object->id}}">
         <input type="hidden" name="id_dish" value="{{$object->id}}">
-        
-        
+
+
 
     @for($i = 0; $i < $a ; $i++)
     </div>
@@ -76,7 +77,7 @@ use App\Models\Dish;
                     {{$each->quantity}}
                 </td>
                 <td>
-                    <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Delete1({{$each->id}},this)" type="button">Xóa</button>
+                    <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Delete1({{$each->id}},{{$each->quantity}},{{$object->id}},{{$each->ingredient_id}},this)" type="button">Xóa</button>
                 </td>
                 {{-- <td>
                     <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Update1({{$each->id}},this)" type="button">Sửa</button>
@@ -98,6 +99,7 @@ use App\Models\Dish;
                 },
                 success: function(res) {
                     $('#selectIngredient').html(res);
+
                 },
                 complete: function() {
                     $('#loader').hide();
@@ -130,14 +132,17 @@ use App\Models\Dish;
             }
         });
     })
-    function Delete1(id,_this){
-        var result = confirm("Bạn có chắc muốn xóa không?");
+    function Delete1(id,quantity,id_dish,id_ingredient,_this){
+        var result = confirm("Bạn có chắc muốn xóaaa không?");
         if (result) {
             $.ajax({
                 url: `/dish/delete_ingredient`,
                 method:"get",
                 data:{
                     id:id,
+                    quantity:quantity,
+                    id_dish:id_dish,
+                    id_ingredient:id_ingredient,
                 },
                 beforeSend: function() {
                     $('#loader').show();
