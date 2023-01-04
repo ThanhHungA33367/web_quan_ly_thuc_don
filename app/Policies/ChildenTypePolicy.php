@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Childen_Type;
+use App\Models\Children_Type;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -25,10 +25,11 @@ class ChildenTypePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Childen_Type  $childenType
+     * @param  \App\Models\Children_Type  $childenType
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Childen_Type $childenType)
+    public function view(User $user, Children_Type $childenType)
     {
         //
     }
@@ -48,10 +49,11 @@ class ChildenTypePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Childen_Type  $childenType
+     * @param  \App\Models\Children_Type  $childenType
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Childen_Type $childenType)
+    public function update(User $user, Children_Type $childenType)
     {
         //
     }
@@ -60,10 +62,11 @@ class ChildenTypePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Childen_Type  $childenType
+     * @param  \App\Models\Children_Type  $childenType
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Childen_Type $childenType)
+    public function delete(User $user, Children_Type $childenType)
     {
         //
     }
@@ -72,10 +75,11 @@ class ChildenTypePolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Childen_Type  $childenType
+     * @param  \App\Models\Children_Type  $childenType
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Childen_Type $childenType)
+    public function restore(User $user, Children_Type $childenType)
     {
         //
     }
@@ -84,10 +88,11 @@ class ChildenTypePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Childen_Type  $childenType
+     * @param  \App\Models\Children_Type  $childenType
+     *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Childen_Type $childenType)
+    public function forceDelete(User $user, Children_Type $childenType)
     {
         //
     }

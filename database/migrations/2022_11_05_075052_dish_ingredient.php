@@ -32,4 +32,6 @@ class DishIngredient extends Migration
     {
         //
     }
+
+
 }
