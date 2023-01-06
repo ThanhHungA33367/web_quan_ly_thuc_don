@@ -32,7 +32,7 @@ use App\Models\Dish;
 
     <?php  $a = 1 ?>
     <div class="form-group mt-3">
-        <label> Nhóm thực phẩm </label>
+        <label for="example-email"> Nhóm thực phẩm </label>
         <Br>
         <label>
             <select id="provinces"  class="custom-select">
@@ -44,22 +44,18 @@ use App\Models\Dish;
         </label>
         </div>
     <div class="form-group mt-3">
+
         <label for="example-email">Thành phần món ăn</label>
         <input type="hidden" name="dish_id[]" value="{{$object->id}}">
         <input type="hidden" name="id_dish" value="{{$object->id}}">
-
-
-
     @for($i = 0; $i < $a ; $i++)
     </div>
+
     <div id="selectIngredient"></div>
     @endfor
-    <button class="btn btn-info " style="margin-top: 100px; margin-left: 120px" id ='add_ingredient'>Thêm</button>
+    <button class="btn btn-info " style="margin-top: 0px; margin-left: 120px" id ='add_ingredient'>Thêm</button>
     <div id="receive_data"></div>
 
-
-
-</form>
 <div id="show">
     <table>
         <tr>
@@ -86,6 +82,7 @@ use App\Models\Dish;
         @endforeach
     </table>
 </div>
+</form>
 
 <script>
     $(document).ready(function (){

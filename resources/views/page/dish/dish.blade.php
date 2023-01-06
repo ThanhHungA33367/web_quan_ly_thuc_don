@@ -35,6 +35,8 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
+
                 </tr>
                 </thead>
                 <?php  $i = 1;?>
@@ -52,7 +54,6 @@
                         <td>
                             {{ $each->childrentypename }}
                         </td>
-
                         <td>
                             {{ $each->description }}
                         </td>
@@ -66,7 +67,7 @@
                             <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
                         </td>
                         <td width = 150 style="text-align: center">
-                            <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
+                            <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-info ">Xóa</button>
                         </td>
 
                     </tr>
