@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditDish extends Migration
+class UpdateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,13 @@ class EditDish extends Migration
      */
     public function up()
     {
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('full_name');
+            $table->string('school_name');
+            $table->string('phone');
+            $table->integer('status');
+            $table->dropColumn('kalo_day');
+        });
     }
 
     /**
@@ -23,8 +29,6 @@ class EditDish extends Migration
      */
     public function down()
     {
-        Schema::table('dishes', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }
