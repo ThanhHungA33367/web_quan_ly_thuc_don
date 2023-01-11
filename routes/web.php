@@ -5,7 +5,9 @@ use App\Http\Controllers\DishController;
 use App\Http\Controllers\DishTypeController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\IngredientTypeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +22,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('page.welcomepage');
-});
+
+Route::get('/', [UserController::class, 'index'])->name('user.index');
+
 Route::get('/layout', function () {
     return view('layout');
 });
+Route::get('/login', [LoginController::class, 'getLogin'])->name('login.index');
+Route::post('/login', [LoginController::class, 'postLogin'])->name('login.access');
+Route::get('/logout', [LoginController::class, 'Logout'])->name('logout');
+
+
+Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
+
+Route::post('/register/store', [RegisterController::class, 'store'])->name('register.store');
 Route::get('/dish', [DishController::class, 'index'])->name('dish.index');
 Route::get('/dish/create', [DishController::class, 'create'])->name('dish.create');
 Route::get('/dish/create_ingredient_dish/{id}', [DishController::class, 'create_ingredient_dish'])->name('dish.create_ingredient_dish');

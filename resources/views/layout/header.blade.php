@@ -239,15 +239,16 @@
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="" class="dropdown-item notify-item">
                         <i class="mdi mdi-lock-outline mr-1"></i>
                         <span>Lock Screen</span>
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+
+                    <a href="{{route('logout')}}" class="dropdown-item notify-item">
                         <i class="mdi mdi-logout mr-1"></i>
-                        <span>Logout</span>
+                        <span>Logoutt</span>
                     </a>
 
                 </div>
