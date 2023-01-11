@@ -350,6 +350,9 @@
                                 <a class="dropdown-item  " href="{{route('children_type.index')}}">
                                     Quản lý nhóm trẻ
                                 </a>
+                                <a class="dropdown-item  " href="{{route('user.index')}}">
+                                    Quản lý người dùng
+                                </a>
 
                         </div>
                     </li>

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     use HasFactory;
+    public $table = "users";
+    public $timestamps = false;
+    protected $fillable = ['email','hashed_password','full_name', 'school_name', 'phone', 'status'];
 }
