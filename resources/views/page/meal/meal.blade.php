@@ -19,7 +19,9 @@
             @endif
 
         <div class='card-body'>
+            @if(Auth::user()->status !== 1)
             <button  id="mediumButton"  onclick="Add()" class="btn btn-xs btn-info ">Thêm</button>
+            @endif
             <form class="float-right form-group form-inline">
                 <label class="mr-2">Search:</label>
                 <input type="search" name="q" value="{{ $search }}" class="form-control">
@@ -31,8 +33,10 @@
                     <th>#</th>
                     <th>Tên bữa ăn</th>
                     <th>Mô tả</th>
+                    @if(Auth::user()->status !== 1)
                     <th></th>
                     <th></th>
+                    @endif
                 </tr>
                 </thead>
                 <?php  $i = 1;?>
@@ -47,12 +51,14 @@
                         <td>
                             {{ $each->description }}
                         </td>
+                        @if(Auth::user()->status !== 1)
                         <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
                         </td>
                         <td width = 150 style="text-align: center">
                             <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
                         </td>
+                        @endif
                     </tr>
 
 
