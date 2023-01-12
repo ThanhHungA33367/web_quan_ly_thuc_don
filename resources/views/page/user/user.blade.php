@@ -48,7 +48,7 @@
                             {{ $each->email }}
                         </td>
                         <td>
-                            {{ $each->hashed_password }}
+                            {{ $each->password }}
                         </td>
                         <td>
                             {{ $each->full_name }}

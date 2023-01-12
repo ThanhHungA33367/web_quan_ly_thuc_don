@@ -14,7 +14,7 @@ use App\Models\User;
 
     <div class="form-group mb-3">
         <label for="simpleinput">Mật khẩu</label>
-        <input type="text" name="hashed_password" class="form-control" value="{{$object->hashed_password}}">
+        <input type="text" name="password" class="form-control" value="{{$object->password}}">
     </div>
 
     <div class="form-group mb-3">

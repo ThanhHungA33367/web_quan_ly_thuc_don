@@ -11,7 +11,7 @@ use App\Models\User;
 
     <div class="form-group mb-3">
         <label for="example-email">Mật khẩu</label>
-        <input type="text" name="hashed_password"  class="form-control" >
+        <input type="text" name="password"  class="form-control" >
     </div>
 
     <div class="form-group mb-3">

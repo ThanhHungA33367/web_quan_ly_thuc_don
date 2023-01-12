@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -17,6 +19,17 @@ class UserController extends Controller
     public function index(Request $request)
     {
         return view('page.welcomepage');
+    }
+
+    public function index1(Request $request)
+    {
+        $search = $request-> get('q');
+        $data = User::where('users.email','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.user.user',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**
@@ -39,9 +52,11 @@ class UserController extends Controller
     {
         $user = new User();
         $user->fill($request->all());
-        $user->status = 2;
+        $password = Hash::make($request->password);
+        $user->password = $password;
+        $user->status = 0;
         $user->save();
-        return redirect()->route('user.index')->with('message', 'Thêm thành công!');
+        return redirect()->route('user.index1')->with('message', 'Thêm thành công!');
     }
 
     /**
@@ -81,7 +96,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->fill($request->except(['_token', '_method']));
         $user->save();
-        return redirect()->route('user.index')->with('message', 'Sửa thành công!');
+        return redirect()->route('user.index1')->with('message', 'Sửa thành công!');
     }
 
     /**
