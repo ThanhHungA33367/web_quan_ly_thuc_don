@@ -82,7 +82,7 @@
 
                 <!-- Footer-->
                 <footer class="footer footer-alt">
-                    <p class="text-muted">Already have account? <a href="pages-login-2.html" class="text-muted ml-1"><b>Log In</b></a></p>
+                    <p class="text-muted">Already have account? <a href="{{route('login.index')}}" class="text-muted ml-1"><b>Log In</b></a></p>
                 </footer>
 
             </div> <!-- end .card-body -->

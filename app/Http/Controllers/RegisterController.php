@@ -32,7 +32,8 @@ class RegisterController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreUserRequest $request)
     {
@@ -42,6 +43,7 @@ class RegisterController extends Controller
         $user->password = $password;
         $user->status = 0;
         $user->save();
+        return redirect()->route('login.index')->with('success', 'Đăng ký thành công');
 
     }
 

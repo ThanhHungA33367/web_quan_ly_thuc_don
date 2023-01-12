@@ -6,8 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
-class checkAdminLogin
+class checkUserAcess
 {
     /**
      * Handle an incoming request.
@@ -16,17 +15,12 @@ class checkAdminLogin
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public
-
-
-    function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
 
-        if (Auth::check()) {
-
-            return $next($request);
+        if (Auth::user()->status !== 0) {
+            return redirect()->route('user.index');
         }
-
-        return redirect()->route('login.index');
+        return $next($request);
     }
 }

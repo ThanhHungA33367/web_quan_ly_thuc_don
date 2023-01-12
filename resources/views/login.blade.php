@@ -51,6 +51,14 @@
                         @endforeach
                     </ul>
                 @endif
+                @if (\Session::has('success'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('success') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{route('login.access')}}" method="post">
                     @csrf
                     <div class="form-group">
@@ -73,7 +81,7 @@
 
                 <!-- Footer-->
                 <footer class="footer footer-alt">
-                    <p class="text-muted">Don't have an account? <a href="pages-register-2.html" class="text-muted ml-1"><b>Sign Up</b></a></p>
+                    <p class="text-muted">Don't have an account? <a href="{{route('register.index')}}" class="text-muted ml-1"><b>Sign Up</b></a></p>
                 </footer>
 
             </div> <!-- end .card-body -->
