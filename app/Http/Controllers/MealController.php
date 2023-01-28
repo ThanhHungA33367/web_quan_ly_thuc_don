@@ -42,10 +42,10 @@ class MealController extends Controller
      * @param  \App\Http\Requests\StoreMealRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMealRequest $request)
     {
         $meal = new Meal();
-        $meal->fill($request->all());
+        $meal->fill($request->validated());
         $meal->save();
         return redirect()->route('meal.index')->with('message', 'Thêm thành công!');
     }

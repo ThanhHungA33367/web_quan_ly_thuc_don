@@ -333,10 +333,8 @@
                             Quản lý thực đơn
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-dashboards">
-                            <a href="dashboard-analytics.html" class="dropdown-item">Analytics</a>
-                            <a href="dashboard-crm.html" class="dropdown-item">CRM</a>
-                            <a href="index.html" class="dropdown-item">Ecommerce</a>
-                            <a href="dashboard-projects.html" class="dropdown-item">Projects</a>
+                            <a href="dashboard-analytics.html" class="dropdown-item">Tạo thực đơn</a>
+                            <a href="dashboard-crm.html" class="dropdown-item">Quản lý thực đơn</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -351,9 +349,11 @@
                                 <a class="dropdown-item  " href="{{route('children_type.index')}}">
                                     Quản lý nhóm trẻ
                                 </a>
+                                @if(Auth::user()->status !== 1)
                                 <a class="dropdown-item  " href="{{route('user.index1')}}">
                                     Quản lý người dùng
                                 </a>
+                                @endif
 
                         </div>
                     </li>

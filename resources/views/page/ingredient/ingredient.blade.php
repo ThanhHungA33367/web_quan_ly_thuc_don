@@ -31,6 +31,7 @@
                 <thead class="thead-dark">
                 <tr>
                     <th>#</th>
+                    <th>Tên thực phẩm</th>
                     <th>Nhóm thực phẩm</th>
                     <th>Kalo/100g</th>
                     <th>Chất đạm/100g</th>
@@ -52,6 +53,9 @@
                         </td>
                         <td>
                             {{ $each->name }}
+                        </td>
+                        <td>
+                            {{ $each->ingredient_type_name }}
                         </td>
                         <td>
                             {{ $each->kalo_day }}

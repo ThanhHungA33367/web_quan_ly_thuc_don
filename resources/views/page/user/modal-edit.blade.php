@@ -1,4 +1,4 @@
-<?php
+{{-- <?php
 namespace App\Http\Controllers;
 use App\Models\User;
 ?>
@@ -34,4 +34,4 @@ use App\Models\User;
 
     <button class="btn btn-info" >Sửa</button>
 
-</form>
+</form> --}}

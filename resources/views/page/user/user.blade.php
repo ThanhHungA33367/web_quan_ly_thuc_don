@@ -19,7 +19,6 @@
             @endif
 
         <div class='card-body'>
-            <button  id="mediumButton"  onclick="Add()" class="btn btn-xs btn-info ">Thêm</button>
             <form class="float-right form-group form-inline">
                 <label class="mr-2">Search:</label>
                 <input type="search" name="q" value="{{ $search }}" class="form-control">
@@ -30,7 +29,6 @@
                 <tr>
                     <th>#</th>
                     <th>Email</th>
-                    <th>Mật khẩu</th>
                     <th>Tên</th>
                     <th>Trường</th>
                     <th>Số điện thoại</th>
@@ -48,9 +46,6 @@
                             {{ $each->email }}
                         </td>
                         <td>
-                            {{ $each->password }}
-                        </td>
-                        <td>
                             {{ $each->full_name }}
                         </td>
                         <td>
@@ -58,12 +53,6 @@
                         </td>
                         <td>
                             {{ $each->phone }}
-                        </td>
-                        <td width = 150 style="text-align: center">
-                            <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
-                        </td>
-                        <td width = 150 style="text-align: center">
-                            <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
                         </td>
 
                     </tr>
@@ -86,7 +75,7 @@
                     </div>
                 </div>
             </div>
-    <script>
+    {{-- <script>
         function Add(){
             $.ajax({
                 url: `/user/create`,
@@ -169,5 +158,5 @@
             })
         }
 
-    </script>
+    </script> --}}
 @endsection

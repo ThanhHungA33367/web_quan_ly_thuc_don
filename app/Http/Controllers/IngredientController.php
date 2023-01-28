@@ -50,10 +50,10 @@ class IngredientController extends Controller
      * @param  \App\Http\Requests\StoreIngredientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreIngredientRequest $request)
     {
         $ingredient = new Ingredient();
-        $ingredient->fill($request->all());
+        $ingredient->fill($request->validated());
         $ingredient->save();
         return redirect()->route('ingredient.index')->with('message', 'Thêm thành công!');
     }
