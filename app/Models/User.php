@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
-    protected $fillable = ['email','phone','hashed_password','full_name','school_name','status'];
     public $timestamps = false;
+    protected $fillable = ['email','password','full_name', 'school_name', 'phone', 'status'];
 }

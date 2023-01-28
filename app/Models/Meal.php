@@ -12,3 +12,4 @@ class Meal extends Model
     public $timestamps = false;
     protected $fillable = ['name','description','id_field'];
 }
+    

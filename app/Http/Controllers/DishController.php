@@ -214,8 +214,8 @@ class DishController extends Controller
 
     public function select($id){
         $object = Dish::where('id', '=', $id)->first();
-        $dish_type_data = Dish_Type::get();
-        $children_type_data = Children_Type::get();
+        $dish_type_data = Dish_Type::where('id', '=', $object->dish_type_id)->first();
+        $children_type_data = Children_Type::where('id', '=', $object->children_type_id)->first();
         return view('page.dish.modal-select',[
             'object' => $object,
             'dish_type_data' => $dish_type_data,

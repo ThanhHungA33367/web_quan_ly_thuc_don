@@ -43,10 +43,10 @@ class DishTypeController extends Controller
      * @param  \App\Http\Requests\StoreDish_TypeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDish_TypeRequest $request)
     {
         $dish_type = new Dish_Type();
-        $dish_type->fill($request->all());
+        $dish_type->fill($request->validated());
         $dish_type->save();
         return redirect()->route('dish_type.index')->with('message', 'Thêm thành công!');
     }

@@ -28,5 +28,11 @@ class checkAdminLogin
         }
 
         return redirect()->route('login.index');
+
+        // if(Auth::check()){
+        //     if(Auth::user()->status==null){
+        //         return redirect()->route('login.index');
+        //     } 
+        // }
     }
 }

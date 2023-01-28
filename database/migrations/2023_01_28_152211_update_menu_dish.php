@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditDish extends Migration
+class UpdateMenuDish extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,10 @@ class EditDish extends Migration
      */
     public function up()
     {
-
+        Schema::table('menu_dish', function (Blueprint $table) {
+            $table->unsignedBigInteger('meal_id')->nullable();
+            $table->foreign('meal_id')->references('id')->on('meals');
+        });
     }
 
     /**
@@ -23,6 +26,8 @@ class EditDish extends Migration
      */
     public function down()
     {
-        
+        Schema::table('menu_dish', function (Blueprint $table) {
+            //
+        });
     }
 }

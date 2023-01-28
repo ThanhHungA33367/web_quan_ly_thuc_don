@@ -41,10 +41,10 @@ class IngredientTypeController extends Controller
      * @param  \App\Http\Requests\StoreIngredient_TypeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreIngredient_TypeRequest $request)
     {
         $ingredient_type = new Ingredient_Type();
-        $ingredient_type->fill($request->all());
+        $ingredient_type->fill($request->validated());
         $ingredient_type->save();
         return redirect()->route('ingredient_type.index')->with('message', 'Thêm thành công!');
     }

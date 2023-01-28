@@ -19,9 +19,6 @@
             @endif
 
         <div class='card-body'>
-            @if(Auth::user()->status !== 1)
-            <button  id="mediumButton"  onclick="Add()" class="btn btn-xs btn-info ">Thêm</button>
-            @endif
             <form class="float-right form-group form-inline">
                 <label class="mr-2">Search:</label>
                 <input type="search" name="q" value="{{ $search }}" class="form-control">
@@ -31,18 +28,12 @@
                 <thead class="thead-dark">
                 <tr>
                     <th>#</th>
-                    <th>Tên thực phẩm</th>
-                    <th>Nhóm thực phẩm</th>
-                    <th>Kalo/100g</th>
-                    <th>Chất đạm/100g</th>
-                    <th>Chất béo/100g</th>
-                    <th>Tinh bột/100g</th>
-                    <th>Đơn giá/100g</th>
-                    @if(Auth::user()->status !== 1)
+                    <th>Email</th>
+                    <th>Tên</th>
+                    <th>Trường</th>
+                    <th>Số điện thoại</th>
                     <th></th>
                     <th></th>
-                    @endif
-
                 </tr>
                 </thead>
                 <?php  $i = 1;?>
@@ -52,40 +43,21 @@
                             {{$i++}}
                         </td>
                         <td>
-                            {{ $each->name }}
+                            {{ $each->email }}
                         </td>
                         <td>
-                            {{ $each->ingredient_type_name }}
+                            {{ $each->full_name }}
                         </td>
                         <td>
-                            {{ $each->kalo_day }}
+                            {{ $each->school_name }}
                         </td>
                         <td>
-                            {{ $each->protein }}
+                            {{ $each->phone }}
                         </td>
-                        <td>
-                            {{ $each->lipid }}
-                        </td>
-                        <td>
-                            {{ $each->carb }}
-                        </td>
-                        <td>
-                            {{ $each->cost }}
-                        </td>
-                        @if(Auth::user()->status !== 1)
-                        <td width = 150 style="text-align: center">
-                            <button  id="mediumButton"  onclick="Edit({{$each->id}})" class="btn btn-xs btn-info ">Sửa</button>
-                        </td>
-                        <td width = 150 style="text-align: center">
-                            <button  id="mediumButton"  onclick="Delete({{$each->id}},this)" class="btn btn-xs btn-danger ">Xóa</button>
-                        </td>
-                            @endif
 
                     </tr>
 
-
                 @endforeach
-
             </table>
             <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
                  aria-hidden="true">
@@ -103,10 +75,10 @@
                     </div>
                 </div>
             </div>
-    <script>
+    {{-- <script>
         function Add(){
             $.ajax({
-                url: `/ingredient/create`,
+                url: `/user/create`,
                 method:"get",
                 data:{
 
@@ -132,7 +104,7 @@
         }
         function Edit(id){
             $.ajax({
-                url: `/ingredient/edit/${id}`,
+                url: `/user/edit/${id}`,
                 method:"get",
                 data:{
 
@@ -158,7 +130,7 @@
         }
         function Delete(id,_this){
             $.ajax({
-                url: `/ingredient/delete`,
+                url: `/user/delete`,
                 method:"get",
                 data:{
                     id:id,
@@ -168,12 +140,11 @@
                 },
                 // return the result
                 success: function(res) {
-                    var result = confirm("Bạn có chắc muốn xóa  không?");
+                    var result = confirm("Bạn có chắc muốn xóa không?");
                     if (result) {
                         $(_this).closest('tr').remove();
 
                     }
-
                 },
                 complete: function() {
                     $('#loader').hide();
@@ -187,5 +158,5 @@
             })
         }
 
-    </script>
+    </script> --}}
 @endsection

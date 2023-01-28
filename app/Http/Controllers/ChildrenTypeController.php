@@ -42,10 +42,10 @@ class ChildrenTypeController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreChilden_TypeRequest $request)
     {
         $children_type = new Children_Type();
-        $children_type->fill($request->all());
+        $children_type->fill($request->validated());
         $children_type->save();
         return redirect()->route('children_type.index')->with('message', 'Thêm thành công!');
     }

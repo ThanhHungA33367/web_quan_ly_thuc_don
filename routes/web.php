@@ -62,6 +62,13 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     //Route::put('/dish/edit_dish_ingredient/{id}', [DishController::class, 'update_ingredient_dish'])->name('edit_dish_ingredient.update');
     //Route::get('/dish/edit_dish_ingredient/{id}', [DishController::class, 'edit_ingredient_dish'])->name('edit_dish_ingredient.edit');
 
+Route::get('/user', [UserController::class, 'index1'])->name('user.index1');
+// Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+// Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+// Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+// Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('user.update');
+// Route::get('/user/delete', [UserController::class, 'cancel'])->name('user.cancel');
+
 
     Route::get('/dish_type', [DishTypeController::class, 'index'])->name('dish_type.index');
     Route::get('/dish_type/create', [DishTypeController::class, 'create'])->name('dish_type.create');
