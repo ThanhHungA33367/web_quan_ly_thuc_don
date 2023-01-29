@@ -7,6 +7,7 @@ use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\IngredientTypeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -62,12 +63,12 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     //Route::put('/dish/edit_dish_ingredient/{id}', [DishController::class, 'update_ingredient_dish'])->name('edit_dish_ingredient.update');
     //Route::get('/dish/edit_dish_ingredient/{id}', [DishController::class, 'edit_ingredient_dish'])->name('edit_dish_ingredient.edit');
 
-Route::get('/user', [UserController::class, 'index1'])->name('user.index1');
-// Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-// Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
-// Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-// Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('user.update');
-// Route::get('/user/delete', [UserController::class, 'cancel'])->name('user.cancel');
+    Route::get('/user', [UserController::class, 'index1'])->name('user.index1');
+    // Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    // Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+    // Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    // Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('user.update');
+    // Route::get('/user/delete', [UserController::class, 'cancel'])->name('user.cancel');
 
 
     Route::get('/dish_type', [DishTypeController::class, 'index'])->name('dish_type.index');
@@ -108,4 +109,9 @@ Route::get('/user', [UserController::class, 'index1'])->name('user.index1');
     Route::get('/ingredient_type/edit/{id}', [IngredientTypeController::class, 'edit'])->name('ingredient_type.edit');
     Route::put('/ingredient_type/edit/{id}', [IngredientTypeController::class, 'update'])->name('ingredient_type.update');
     Route::get('/ingredient_type/delete', [IngredientTypeController::class, 'cancel'])->name('ingredient_type.cancel');
+
+    Route::get('/create_menu', [MenuController::class, 'index'])->name('create_menu.index');
+    Route::get('/create_menu/{dish_type_id}', [MenuController::class, 'getDish']);
+    Route::get('/create_menu/send/{children_type_id}', [MenuController::class, 'getChildren']);
+    Route::post('/create_menu/store', [MenuController::class, 'store'])->name('create_menu.store');
 });

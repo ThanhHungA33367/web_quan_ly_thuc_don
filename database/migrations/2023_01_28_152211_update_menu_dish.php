@@ -13,10 +13,10 @@ class UpdateMenuDish extends Migration
      */
     public function up()
     {
-        Schema::table('menu_dish', function (Blueprint $table) {
-            $table->unsignedBigInteger('meal_id')->nullable();
-            $table->foreign('meal_id')->references('id')->on('meals');
-        });
+        // Schema::table('menu_dish', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('kalo')->nullable();
+        //     $table->foreign('meal_id')->references('id')->on('meals');
+        // });
     }
 
     /**
