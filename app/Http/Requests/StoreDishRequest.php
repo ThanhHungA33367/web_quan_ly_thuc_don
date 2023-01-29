@@ -13,7 +13,7 @@ class StoreDishRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class StoreDishRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'bail|required|unique:dishes',
+            'description' =>'bail|required',
+            'dish_type_id' =>'bail|required',
+            'children_type_id' =>'bail|required',
+        ];
+    }
+    public function messages(){
+        return [
+            'name.required'=>'Vui lòng nhập tên món ăn',
+            'name.unique' => 'Tên đã tồn tại',
+            'description.required' => 'Vui lòng nhập mô tả',
+            'dish_type_id.required'=> 'Vui lòng chọn nhóm món ăn',
+            'children_type_id.required'=> 'Vui lòng chọn nhóm trẻ',
         ];
     }
 }

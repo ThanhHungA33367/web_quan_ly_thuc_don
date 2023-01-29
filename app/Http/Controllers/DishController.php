@@ -76,10 +76,10 @@ class DishController extends Controller
      * @param  \App\Http\Requests\StoreDishRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDishRequest $request)
     {
         $dish = new Dish();
-        $dish->fill($request->all());
+        $dish->fill($request->validated());
         $dish->save();
         return redirect()->route('dish.index')->with('message', 'Thêm thành công!');
     }

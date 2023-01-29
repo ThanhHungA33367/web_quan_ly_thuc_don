@@ -37,6 +37,7 @@ class StoreIngredientRequest extends FormRequest
         return [
             'name.required'=>'Vui lòng nhập tên thực phẩm',
             'name.unique' => 'Tên đã tồn tại',
+            'ingredient_type_id.required'=> 'Vui lòng chọn nhóm thực phẩm'
             'kalo_day.required' => 'Vui lòng nhập số lượng kalo',
             'kalo_day.integer' => 'Kalo không hợp lệ',
             'kalo_day.min' => 'Kalo không hợp lệ',
