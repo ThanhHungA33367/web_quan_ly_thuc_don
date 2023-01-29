@@ -4,12 +4,12 @@
 
         <!-- LOGO -->
         <a href="" class="topnav-logo">
-                                <span class="topnav-logo-lg">
+            <span class="topnav-logo-lg">
 
-                                </span>
+            </span>
             <span class="topnav-logo-sm">
 
-                                </span>
+            </span>
         </a>
 
         <ul class="list-unstyled topbar-right-menu float-right mb-0">
@@ -67,11 +67,11 @@
                     <!-- item-->
                     <div class="dropdown-item noti-title">
                         <h5 class="m-0">
-                                                <span class="float-right">
-                                                    <a href="javascript: void(0);" class="text-dark">
-                                                        <small>Clear All</small>
-                                                    </a>
-                                                </span>Notification
+                            <span class="float-right">
+                                <a href="javascript: void(0);" class="text-dark">
+                                    <small>Clear All</small>
+                                </a>
+                            </span>Notification
                         </h5>
                     </div>
 
@@ -207,8 +207,7 @@
             </li>
 
             <li class="dropdown notification-list">
-                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
-                   aria-expanded="false">
+                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <span>
                         <span class="account-user-name">Dominic Keller</span>
                         <span class="account-position">Founder</span>
@@ -255,7 +254,7 @@
             </li>
 
         </ul>
-        <a class="navbar-toggle"  data-toggle="collapse" data-target="#topnav-menu-content">
+        <a class="navbar-toggle" data-toggle="collapse" data-target="#topnav-menu-content">
             <div class="lines">
                 <span></span>
                 <span></span>
@@ -333,7 +332,7 @@
                             Quản lý thực đơn
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-dashboards">
-                            <a href="dashboard-analytics.html" class="dropdown-item">Tạo thực đơn</a>
+                            <a href="{{route('create_menu.index')}}" class="dropdown-item">Tạo thực đơn</a>
                             <a href="dashboard-crm.html" class="dropdown-item">Quản lý thực đơn</a>
                         </div>
                     </li>
@@ -342,8 +341,8 @@
                             Apps
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-apps">
-                        <div class="dropdown">
-                                <a class="dropdown-item  " href="{{route('meal.index')}}" >
+                            <div class="dropdown">
+                                <a class="dropdown-item  " href="{{route('meal.index')}}">
                                     Quản lý bữa ăn
                                 </a>
                                 <a class="dropdown-item  " href="{{route('children_type.index')}}">
@@ -355,7 +354,7 @@
                                 </a>
                                 @endif
 
-                        </div>
+                            </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -363,7 +362,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
                             <div class="dropdown">
-                                <a class="dropdown-item  " href="{{route('dish.index')}}" >
+                                <a class="dropdown-item  " href="{{route('dish.index')}}">
                                     Món ăn
                                 </a>
                                 <a class="dropdown-item  " href="{{route('dish_type.index')}}">
@@ -380,7 +379,7 @@
                             Quản lý thực phẩm
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-pages">
-                            <a class="dropdown-item  " href="{{route('ingredient.index')}}" >
+                            <a class="dropdown-item  " href="{{route('ingredient.index')}}">
                                 Thực phẩm
                             </a>
                             <a class="dropdown-item  " href="{{route('ingredient_type.index')}}">
