@@ -114,4 +114,5 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     Route::get('/create_menu/{dish_type_id}', [MenuController::class, 'getDish']);
     Route::get('/create_menu/send/{children_type_id}', [MenuController::class, 'getChildren']);
     Route::post('/create_menu/store', [MenuController::class, 'store'])->name('create_menu.store');
+    Route::get('/menu',[MenuController::class, 'list'])->name('list_menu');
 });

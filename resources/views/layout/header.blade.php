@@ -333,7 +333,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-dashboards">
                             <a href="{{route('create_menu.index')}}" class="dropdown-item">Tạo thực đơn</a>
-                            <a href="dashboard-crm.html" class="dropdown-item">Quản lý thực đơn</a>
+                            <a href="{{route('list_menu')}}" class="dropdown-item">Quản lý thực đơn</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">

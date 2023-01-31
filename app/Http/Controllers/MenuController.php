@@ -11,6 +11,7 @@ use App\Models\Dish;
 use App\Models\Dish_Type;
 use App\Models\Meal;
 use App\Models\Menu_Dish;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,9 +29,31 @@ class MenuController extends Controller
         $dish = Dish::all();
         return view('page.menu.create-menu', [
             'children_type' => $children_type,
-
             'dish' => $dish,
+        ]);
+    }
+    public function list(Request $request){
+        $userId = Auth::id();
+        $user = User::where('id', '=', $userId)->first();
+        $search = $request-> get('q');
 
+        if($user->status == 0){
+            $data = Menu::where('menus.name','like','%'.$search.'%')->where('users.id', '=', $userId)
+            ->join('users', 'user_id', '=', 'users.id')
+            ->join('children_type','children_type_id','=','children_type.id')
+            ->select('children_type.name as childrentypename','menus.*')
+            ->paginate(10)->appends(['q' => $search]);
+        }
+        else{
+            $data = Menu::where('menus.name','like','%'.$search.'%')
+            ->join('children_type','children_type_id','=','children_type.id')
+            ->select('children_type.name as childrentypename','menus.*')
+            ->paginate(10)->appends(['q' => $search]);
+        }  
+
+        return view('page.menu.list-menu',[
+            'data' => $data,
+            'search' => $search,
         ]);
     }
     public function getDish($dish_type_id)
@@ -80,6 +103,11 @@ class MenuController extends Controller
         $menu['children_type_id'] = $request->children_type_id;
         $menu['menu_date'] = $request->menu_date;
         $menu['user_id'] = Auth::id();
+        $menu->kalo = 0;
+        $menu->protein = 0;
+        $menu->lipid = 0;
+        $menu->carb = 0;
+        $menu->cost = 0;
         $menu->save();
         $menu_id = [];
         $menu_id = $menu->id;
@@ -91,10 +119,17 @@ class MenuController extends Controller
         for ($i = 0; $i < count($mealdish); $i++) {
             $scores = new Menu_Dish();
             $scores->dish_id = $mealdish[$i]['dish_id'];
+            $dish = Dish::where('id', '=', $scores->dish_id)->first();
+            $menu->kalo += $dish->kalo;
+            $menu->protein += $dish->protein;
+            $menu->lipid += $dish->lipid;
+            $menu->carb += $dish->carb;
+            $menu->cost += $dish->cost;
             $scores->menu_id = $menu_id;
             $scores->meal_id = $mealdish[$i]['meal_id']; //add a default value here
             $scores->save();
         }
+        $menu->save();
         $kalo = [];
         $protein = [];
         $lipid = [];
