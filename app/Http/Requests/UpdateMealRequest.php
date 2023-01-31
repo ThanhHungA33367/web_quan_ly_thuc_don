@@ -24,7 +24,15 @@ class UpdateMealRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'bail|required|unique:meals,name,'.$this->user()->id,
+            'description' =>'bail|required',
+        ];
+    }
+    public function messages(){
+        return [
+            'name.required'=>'Vui lòng nhập tên bữa ăn',
+            'name.unique' => 'Tên đã tồn tại',
+            'description.required' => 'Vui lòng nhập mô tả',
         ];
     }
 }
