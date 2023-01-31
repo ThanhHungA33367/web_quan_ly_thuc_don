@@ -13,7 +13,7 @@ class UpdateMealRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateMealRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'bail|required|unique:meals,name,'.$this->user()->id,
+            'name'=>'bail|required|unique:meals,name,'.$this->meals->id,
             'description' =>'bail|required',
         ];
     }
