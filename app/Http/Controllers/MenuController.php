@@ -41,13 +41,13 @@ class MenuController extends Controller
             $data = Menu::where('menus.name','like','%'.$search.'%')->where('users.id', '=', $userId)
             ->join('users', 'user_id', '=', 'users.id')
             ->join('children_type','children_type_id','=','children_type.id')
-            ->select('children_type.name as childrentypename','menus.*')
+            ->select('children_type.name as children_type_name','menus.*')
             ->paginate(10)->appends(['q' => $search]);
         }
         else{
             $data = Menu::where('menus.name','like','%'.$search.'%')
             ->join('children_type','children_type_id','=','children_type.id')
-            ->select('children_type.name as childrentypename','menus.*')
+            ->select('children_type.name as children_type_name','menus.*')
             ->paginate(10)->appends(['q' => $search]);
         }  
 
