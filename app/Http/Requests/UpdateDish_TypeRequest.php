@@ -13,7 +13,7 @@ class UpdateDish_TypeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class UpdateDish_TypeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'bail|required|unique:dish_type,name,'. $this->id,
+            'description' =>'bail|required',
+        ];
+    }
+    public function messages(){
+        return [
+            'name.required'=>'Vui lòng nhập tên nhóm món ăn',
+            'name.unique' => 'Tên đã tồn tại',
+            'description.required' => 'Vui lòng nhập mô tả',
         ];
     }
 }

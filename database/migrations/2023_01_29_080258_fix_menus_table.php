@@ -13,13 +13,13 @@ class FixMenusTable extends Migration
      */
     public function up()
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->integer('kalo')->nullable()->change();
-            $table->integer('protein')->nullable()->change();
-            $table->integer('lipid')->nullable()->change();
-            $table->integer('carb')->nullable()->change();
-            $table->integer('cost')->nullable()->change();
-        });
+        // Schema::table('menus', function (Blueprint $table) {
+        //     $table->integer('kalo')->nullable()->change();
+        //     $table->integer('protein')->nullable()->change();
+        //     $table->integer('lipid')->nullable()->change();
+        //     $table->integer('carb')->nullable()->change();
+        //     $table->integer('cost')->nullable()->change();
+        // });
     }
 
     /**

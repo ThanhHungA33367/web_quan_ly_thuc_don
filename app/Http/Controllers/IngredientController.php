@@ -96,10 +96,10 @@ class IngredientController extends Controller
      * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateIngredientRequest $request, $id)
     {
         $ingredient = Ingredient::find($id);
-        $ingredient->fill($request->except(['_token', '_method']));
+        $ingredient->fill($request->validated());
         $ingredient->save();
         return redirect()->route('ingredient.index')->with('message', 'Sửa thành công!');
     }

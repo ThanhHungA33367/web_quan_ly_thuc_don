@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dish;
 use App\Http\Requests\StoreDishRequest;
 use App\Http\Requests\UpdateDishRequest;
+use App\Http\Requests\StoreDish_IngredientRequest;
 use App\Models\Dish_Ingredient;
 use App\Models\Dish_Type;
 use App\Models\Ingredient;
@@ -141,6 +142,11 @@ class DishController extends Controller
             $scores->dish_id = isset($lead[$key]) ? $lead[$key] : '';
             $scores->ingredient_id = isset($ingredients[$key]) ? $ingredients[$key] : ''; //add a default value here
             $scores->quantity = isset($quantity [$key]) ? $quantity [$key] : ''; //add a default value here
+            $validator = Validator::make($request->all(), $request->rules());
+        
+            if ($validator->fails()) {
+                return response()->json($validator->errors());
+            }
             $scores->save();
         }
 
@@ -230,10 +236,10 @@ class DishController extends Controller
      * @param  \App\Models\Dish  $dish
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDishRequest $request, $id)
     {
         $dish = Dish::find($id);
-        $dish->fill($request->except(['_token', '_method']));
+        $dish->fill($request->validated());
         $dish->save();
         return redirect()->route('dish.index')->with('message', 'Sửa thành công!');
     }
