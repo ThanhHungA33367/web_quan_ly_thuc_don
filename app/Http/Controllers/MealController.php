@@ -82,10 +82,10 @@ class MealController extends Controller
      * @param  \App\Models\Meal  $meal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMealRequest $request, $id)
     {
         $meal = Meal::find($id);
-        $meal->fill($request->except(['_token', '_method']));
+        $meal->fill($request->validated());
         $meal->save();
         return redirect()->route('meal.index')->with('message', 'Sửa thành công!');
     }

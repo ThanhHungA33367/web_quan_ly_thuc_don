@@ -83,10 +83,10 @@ class DishTypeController extends Controller
      * @param  \App\Models\Dish_Type  $dish_Type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDish_TypeRequest $request, $id)
     {
         $dish_Type = Dish_Type::find($id);
-        $dish_Type->fill($request->except(['_token', '_method']));
+        $dish_Type->fill($request->validated());
         $dish_Type->save();
         return redirect()->route('dish_type.index')->with('message', 'Sửa thành công!');
     }

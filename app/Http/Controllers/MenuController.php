@@ -14,6 +14,10 @@ use App\Models\Menu_Dish;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule; 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+
 
 class MenuController extends Controller
 {
@@ -56,6 +60,7 @@ class MenuController extends Controller
             'search' => $search,
         ]);
     }
+    
     public function getDish($dish_type_id)
     {
         // $dish = Dish::where('dish_type_id', '=', $dish_type_id)->get();
@@ -94,7 +99,7 @@ class MenuController extends Controller
      * @param  \App\Http\Requests\StoreMenuRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMenuRequest $request)
     {
         $data = $request->except(['_token']);
         $menu = new Menu();
@@ -108,13 +113,16 @@ class MenuController extends Controller
         $menu->lipid = 0;
         $menu->carb = 0;
         $menu->cost = 0;
+        $validator = Validator::make($request->all(), $request->rules());
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+        //$menu->validate();
         $menu->save();
         $menu_id = [];
         $menu_id = $menu->id;
         $mealdish = json_decode($request->mealdish, true);
-
-
-
 
         for ($i = 0; $i < count($mealdish); $i++) {
             $scores = new Menu_Dish();
@@ -127,14 +135,20 @@ class MenuController extends Controller
             $menu->cost += $dish->cost;
             $scores->menu_id = $menu_id;
             $scores->meal_id = $mealdish[$i]['meal_id']; //add a default value here
+            // $validator = Validator::make($mealdish[$i],[
+            //     'dish_id' => [
+            //         Rule::unique('menu_dish')->where(fn ($query) => $query->where('meal_id', $mealdish[$i]['meal_id'])
+            //                                                                 ->where('dish_id', $mealdish[$i]['dish_id'])),
+            //      ]
+            // ] );
+            // if ($validator->fails()) {
+            //     return response()->json(['errors' => 'errors']);
+            // }
+            
             $scores->save();
         }
         $menu->save();
-        $kalo = [];
-        $protein = [];
-        $lipid = [];
-        $carb = [];
-        $cost = [];
+        return response()->json(['success' => 'success'], 200);
     }
 
     /**

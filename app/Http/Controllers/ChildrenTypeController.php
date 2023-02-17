@@ -85,10 +85,10 @@ class ChildrenTypeController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateChilden_TypeRequest $request, $id)
     {
         $children_type = Children_Type::find($id);
-        $children_type->fill($request->except(['_token', '_method']));
+        $children_type->fill($request->validated());
         $children_type->save();
         return redirect()->route('children_type.index')->with('message', 'Sửa thành công!');
     }

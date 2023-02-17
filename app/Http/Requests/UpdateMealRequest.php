@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
+use App\Models\Meal;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,8 +25,9 @@ class UpdateMealRequest extends FormRequest
      */
     public function rules()
     {
+        //$id = Meal::where('name', $this->request->get('name'))->value('id');
         return [
-            'name'=>'bail|required|unique:meals,name,'.$this->meals->id,
+            'name'=> 'required|unique:meals,name,'. $this->id,
             'description' =>'bail|required',
         ];
     }

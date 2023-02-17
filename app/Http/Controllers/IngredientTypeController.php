@@ -81,10 +81,10 @@ class IngredientTypeController extends Controller
      * @param  \App\Models\Ingredient_Type  $ingredient_Type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateIngredient_TypeRequest $request, $id)
     {
         $ingredient_type = Ingredient_Type::find($id);
-        $ingredient_type->fill($request->except(['_token', '_method']));
+        $ingredient_type->fill($request->validated());
         $ingredient_type->save();
         return redirect()->route('ingredient_type.index')->with('message', 'Sửa thành công!');
     }

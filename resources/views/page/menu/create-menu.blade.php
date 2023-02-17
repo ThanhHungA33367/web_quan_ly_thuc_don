@@ -1,10 +1,13 @@
 @extends('layout.master')
 @section('content')
 <div class='card-body'>
+
+    
     <form id="form_add_menu">
         @csrf
+        <div id ="response"></div>
         <div class="form-group mb-3">
-            <label for="simpleinput">Tên menu</label>
+            <label for="simpleinput">Tên thực đơn</label>
             <input type="text" name="name" class="form-control">
         </div>
         <div class="form-group mb-3">
@@ -104,11 +107,25 @@
                 alert('Updated completed.');
                 $("#receive_data").html(res);
             },
-            error: function(data) {
-                // Android.passParams(url);
-            }
-        });
-    })
+            error :function( data ) {
+                if( data.status === 422 ) {
+                var errors = $.parseJSON(data.responseText);
+                $.each(errors, function (key, value) {
+                // console.log(key+ " " +value);
+                $('#response').addClass("alert alert-danger");
+
+                if($.isPlainObject(value)) {
+                    $.each(value, function (key, value) {                       
+                        console.log(key+ " " +value);
+                    $('#response').show().append(value+"<br/>");
+
+                    });
+                }else{
+                $('#response').show().append(value+"<br/>"); //this is my div with messages
+                }
+            });
+          }}
+        }),
     $(document).ready(function() {
         $('#children_type_change').on('change', function() {
             let children_type_id = $(this).val();
@@ -127,5 +144,6 @@
             })
         });
     })
+})
 </script>
 @endsection

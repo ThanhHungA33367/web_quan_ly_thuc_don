@@ -4,7 +4,13 @@ use App\Models\Ingredient_Type;
 ?>
 <form action = '{{route('ingredient_type.update',$object->id)}}'  method="post" enctype="multipart/form-data">
     @csrf
-
+    @if (count($errors) >0)
+    <ul>
+        @foreach($errors->all() as $error)
+            <li class="text-danger"> {{ $error }}</li>
+        @endforeach
+    </ul>
+    @endif
     @method('put')
     <div class="form-group mb-3">
         <label for="simpleinput">Tên</label>
