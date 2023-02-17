@@ -7,23 +7,14 @@ use App\Models\Dish;
 
 @section('content')
     <div class='card'>
-        @if ($errors->any())
-            <div class="card-header">
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
-            @if(session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session()->get('message') }}
-                </div>
-            @endif
-<form id="form_add_ingredient" enctype= 'multipart/form-data'>
+        @if (count($errors) >0)
+        <ul>
+            @foreach($errors->all() as $error)
+                <li class="text-danger"> {{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+<form id="form_add_ingredient" enctype= 'multipart/form-data' method = 'post'>
     @csrf
     <div class="form-group mb-3">
         <label for="simpleinput">Tên món ăn</label>
@@ -124,9 +115,24 @@ use App\Models\Dish;
                 alert('Updated completed.');
                 $("#receive_data").html(res);
             },
-            error: function (data) {
-                // Android.passParams(url);
-            }
+            error :function( data ) {
+                if( data.status === 422 ) {
+                var errors = $.parseJSON(data.responseText);
+                $.each(errors, function (key, value) {
+                // console.log(key+ " " +value);
+                $('#response').addClass("alert alert-danger");
+
+                if($.isPlainObject(value)) {
+                    $.each(value, function (key, value) {                       
+                        console.log(key+ " " +value);
+                    $('#response').show().append(value+"<br/>");
+
+                    });
+                }else{
+                $('#response').show().append(value+"<br/>"); //this is my div with messages
+                }
+            });
+          }}
         });
     })
     function Delete1(id,quantity,id_dish,id_ingredient,_this){
