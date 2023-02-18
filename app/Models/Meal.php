@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Meal extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','description','id_field','price'];
+    public $table = "meals";
+    public $timestamps = false;
+    protected $fillable = ['name','description','id_field'];
 }
+    

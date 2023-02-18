@@ -9,4 +9,6 @@ class Dish_Type extends Model
 {
     use HasFactory;
     public $table = "dish_type";
+    public $timestamps = false;
+    protected $fillable = ['name','description','id_field'];
 }

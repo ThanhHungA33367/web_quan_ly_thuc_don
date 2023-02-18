@@ -13,7 +13,7 @@ class StoreDish_IngredientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class StoreDish_IngredientRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'ingredient_id' => 'required|unique:dish_ingredient,ingredient_id,NULL,dish_id'.$this->id_dish,
+            'quantity' => 'required',
+             ];
+        
+    }
+    public function messages(){
+        return [
+            'ingredient_id.required' => 'Vui long chon thuc pham',
+            'ingredient_id.unique' => 'Thuc pham da ton tai',
+            'quantity.required' => 'Vui long nhap so luong',
+            'quantity.integer' => 'So luong lon hon 0',
         ];
     }
 }

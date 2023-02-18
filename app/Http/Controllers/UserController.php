@@ -5,17 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return view('page.welcomepage');
+    }
+
+    public function index1(Request $request)
+    {
+        $search = $request-> get('q');
+        $data = User::where('users.email','like','%'.$search.'%')
+            ->paginate(2)->appends(['q' => $search]);
+        return view('page.user.user',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**
@@ -25,7 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('page.user.modal-add');
     }
 
     /**
@@ -34,9 +48,15 @@ class UserController extends Controller
      * @param  \App\Http\Requests\StoreUserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->fill($request->all());
+        $password = Hash::make($request->password);
+        $user->password = $password;
+        $user->status = 0;
+        $user->save();
+        return redirect()->route('user.index1')->with('message', 'Thêm thành công!');
     }
 
     /**
@@ -56,9 +76,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $object = User::where('id', '=', $id)->first();
+        return view('page.user.modal-edit',[
+            'object' => $object,
+        ]);
     }
 
     /**
@@ -68,9 +91,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->fill($request->except(['_token', '_method']));
+        $user->save();
+        return redirect()->route('user.index1')->with('message', 'Sửa thành công!');
     }
 
     /**
@@ -82,5 +108,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function cancel(Request $request)
+    {
+        User::destroy($request->id);
     }
 }

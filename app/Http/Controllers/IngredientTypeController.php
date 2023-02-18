@@ -5,17 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Ingredient_Type;
 use App\Http\Requests\StoreIngredient_TypeRequest;
 use App\Http\Requests\UpdateIngredient_TypeRequest;
+use Illuminate\Http\Request;
 
 class IngredientTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request-> get('q');
+        $data = Ingredient_Type::where('ingredient_type.name','like','%'.$search.'%')
+            ->paginate(10)->appends(['q' => $search]);
+        return view('page.ingredient-type.ingredient_type',[
+            'data' => $data,
+            'search' => $search,
+        ]);
     }
 
     /**
@@ -25,7 +32,7 @@ class IngredientTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('page.ingredient-type.modal-add');
     }
 
     /**
@@ -36,7 +43,10 @@ class IngredientTypeController extends Controller
      */
     public function store(StoreIngredient_TypeRequest $request)
     {
-        //
+        $ingredient_type = new Ingredient_Type();
+        $ingredient_type->fill($request->validated());
+        $ingredient_type->save();
+        return redirect()->route('ingredient_type.index')->with('message', 'Thêm thành công!');
     }
 
     /**
@@ -56,9 +66,12 @@ class IngredientTypeController extends Controller
      * @param  \App\Models\Ingredient_Type  $ingredient_Type
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ingredient_Type $ingredient_Type)
+    public function edit($id)
     {
-        //
+        $object = Ingredient_Type::where('id', '=', $id)->first();
+        return view('page.ingredient-type.modal-edit',[
+            'object' => $object,
+        ]);
     }
 
     /**
@@ -68,9 +81,12 @@ class IngredientTypeController extends Controller
      * @param  \App\Models\Ingredient_Type  $ingredient_Type
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateIngredient_TypeRequest $request, Ingredient_Type $ingredient_Type)
+    public function update(UpdateIngredient_TypeRequest $request, $id)
     {
-        //
+        $ingredient_type = Ingredient_Type::find($id);
+        $ingredient_type->fill($request->validated());
+        $ingredient_type->save();
+        return redirect()->route('ingredient_type.index')->with('message', 'Sửa thành công!');
     }
 
     /**
@@ -82,5 +98,9 @@ class IngredientTypeController extends Controller
     public function destroy(Ingredient_Type $ingredient_Type)
     {
         //
+    }
+    public function cancel(Request $request)
+    {
+        Ingredient_Type::destroy($request->id);
     }
 }
