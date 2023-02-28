@@ -14,7 +14,7 @@ use App\Models\Menu_Dish;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule; 
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 
@@ -36,40 +36,58 @@ class MenuController extends Controller
             'dish' => $dish,
         ]);
     }
-    public function list(Request $request){
+    public function list(Request $request)
+    {
         $userId = Auth::id();
         $user = User::where('id', '=', $userId)->first();
-        $search = $request-> get('q');
+        $search = $request->get('q');
 
-        if($user->status == 0){
-            $data = Menu::where('menus.name','like','%'.$search.'%')->where('users.id', '=', $userId)
-            ->join('users', 'user_id', '=', 'users.id')
-            ->join('children_type','children_type_id','=','children_type.id')
-            ->select('children_type.name as children_type_name','menus.*')
-            ->paginate(10)->appends(['q' => $search]);
+        if ($user->status == 0) {
+            $data = Menu::where('menus.name', 'like', '%' . $search . '%')->where('users.id', '=', $userId)
+                ->join('users', 'user_id', '=', 'users.id')
+                ->join('children_type', 'children_type_id', '=', 'children_type.id')
+                ->select('children_type.name as children_type_name', 'menus.*')
+                ->paginate(10)->appends(['q' => $search]);
+        } else {
+            $data = Menu::where('menus.name', 'like', '%' . $search . '%')
+                ->join('children_type', 'children_type_id', '=', 'children_type.id')
+                ->select('children_type.name as children_type_name', 'menus.*')
+                ->paginate(10)->appends(['q' => $search]);
         }
-        else{
-            $data = Menu::where('menus.name','like','%'.$search.'%')
-            ->join('children_type','children_type_id','=','children_type.id')
-            ->select('children_type.name as children_type_name','menus.*')
-            ->paginate(10)->appends(['q' => $search]);
-        }  
 
-        return view('page.menu.list-menu',[
+        return view('page.menu.list-menu', [
             'data' => $data,
             'search' => $search,
         ]);
     }
-    
+
+    public function view_detail($id)
+    {
+        $data = Menu_Dish::where('menu_id', '=', $id)->first();
+        if ($data != null) {
+            $dish_id = $data->dish_id;
+            $data_menu = Menu::where('id', '=', $id)->get();
+            $data_dish = Dish::where('id', '=', $dish_id)->get();
+            $data_dish1 = Dish::where('id', '=', $dish_id)->first();
+            $children_type_id = $data_dish1->children_type_id;
+            $data_children_type = Children_Type::where('id', '=', $children_type_id)->get();
+            return view('page.menu.modal-view-detail', [
+                'data_dish' => $data_dish,
+                'data_menu' => $data_menu,
+                'data_children_type' => $data_children_type,
+            ]);
+        } else {
+            Redirect::back()->withErrors(['msg' => 'The Message']);
+        }
+    }
+
     public function getDish($dish_type_id)
     {
-        // $dish = Dish::where('dish_type_id', '=', $dish_type_id)->get();
-        // return view(
-        //     'page.menu.selectDish',
-        //     [
-
-        //     ]
-        // );
+        $dish = Dish::where('dish_type_id', '=', $dish_type_id)->get();
+        return view(
+            'page.menu.selectDish',
+            []
+        );
     }
     public function getChildren($children_type_id)
     {
@@ -114,7 +132,7 @@ class MenuController extends Controller
         $menu->carb = 0;
         $menu->cost = 0;
         $validator = Validator::make($request->all(), $request->rules());
-        
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()]);
         }
@@ -144,7 +162,7 @@ class MenuController extends Controller
             // if ($validator->fails()) {
             //     return response()->json(['errors' => 'errors']);
             // }
-            
+
             $scores->save();
         }
         $menu->save();
