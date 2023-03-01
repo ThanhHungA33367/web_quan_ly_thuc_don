@@ -18,11 +18,34 @@
                 </div>
             @endif
 
+            <div class="text-right">
+                <a href="{{ route('menus.export', [
+                    'q' => $search,
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                ]) }}" class="btn btn-success"><i class="fa fa-download"></i> Xuất tệp excel</a>
+            </div>     
+                   
         <div class='card-body'>
             <form class="float-right form-group form-inline">
-                <label class="mr-2">Search:</label>
-                <input type="search" name="q" value="{{ $search }}" class="form-control">
+                <div class="form-group">
+                    <label class="mr-2">Tìm kiếm:</label>
+                    <input type="text" name="q" value="{{ $search }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="startDate">Bắt đầu: </label>
+                    <input type="date" name="startDate" id="startDate" value="{{ $startDate }}" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">Đến: </label>
+                    <input type="date" name="endDate" id="endDate" value="{{ $endDate }}" class="form-control"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                <a href="{{ route('reset-search') }}" class="btn btn-secondary">Reset</a>
             </form>
+
+            
+
 
             <table class="table table-bordered ">
                 <thead class="thead-dark">
@@ -79,6 +102,10 @@
                     </tr>
                 @endforeach
             </table>
+
+             {{-- {{ $data->links() }} --}}
+
+             {{ $data->links('pagination::bootstrap-4', ['onEachSide' => 3]) }}
 
             <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
                  aria-hidden="true">

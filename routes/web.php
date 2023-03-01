@@ -115,4 +115,8 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     Route::get('/create_menu/send/{children_type_id}', [MenuController::class, 'getChildren']);
     Route::post('/create_menu/store', [MenuController::class, 'store'])->name('create_menu.store');
     Route::get('/menu',[MenuController::class, 'list'])->name('list_menu');
+    Route::get('/menus/export', [MenuController::class, 'export'])->name('menus.export');
+    Route::get('/reset-search', function () {
+        return redirect()->route('list_menu');
+    })->name('reset-search');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule; 
+use App\Http\Requests\UniqueDishMealPairRule;
 
 class StoreMenuRequest extends FormRequest
 {
@@ -25,11 +26,13 @@ class StoreMenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'bail|required',
-            'description' =>'bail|required',
-            'children_type_id' => 'bail|required',
-            'menu_date' => 'required',
-            
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'children_type_id' => 'required|numeric',
+            'menu_date' => 'required|date',
+            'mealdish' => 'required|min:1',
+            'mealdish.*.dish_id' => 'integer',
+            'mealdish.*.meal_id' => ['nullable', 'numeric', new UniqueDishMealPairRule], //use custom rule
         ];
     }
     public function messages(){
@@ -38,7 +41,7 @@ class StoreMenuRequest extends FormRequest
             'description.required' => 'Vui lòng nhập mô tả',
             'menu_date.required' => 'Vui lòng nhập ngay',
             'children_type_id.required' => 'Vui lòng nhập chon nhom tre',
-            
+            'mealdish.*.dish_id.integer' => 'The dish_id field is required for all mealdish items',
         ];
     }
 

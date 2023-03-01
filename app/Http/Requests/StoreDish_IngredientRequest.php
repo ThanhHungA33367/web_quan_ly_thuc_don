@@ -3,8 +3,14 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\Facades\Validator;
+
+
 
 class StoreDish_IngredientRequest extends FormRequest
+
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +30,7 @@ class StoreDish_IngredientRequest extends FormRequest
     public function rules()
     {
         return [
-            'ingredient_id' => 'required|unique:dish_ingredient,ingredient_id,NULL,dish_id'.$this->id_dish,
+            'ingredient_id' => 'required|unique:dish_ingredient,ingredient_id,' . $this->id . ',id,dish_id,' . $this->id_dish,
             'quantity' => 'required',
              ];
         
@@ -37,4 +43,5 @@ class StoreDish_IngredientRequest extends FormRequest
             'quantity.integer' => 'So luong lon hon 0',
         ];
     }
+    
 }

@@ -6,75 +6,75 @@ use App\Models\Dish;
 ?>
 
 @section('content')
-    <div class='card'>
+<div>    
+    <form id="form_add_ingredient" enctype= 'multipart/form-data' method = 'post'>
+        @csrf
         @if (count($errors) >0)
         <ul>
             @foreach($errors->all() as $error)
                 <li class="text-danger"> {{ $error }}</li>
             @endforeach
         </ul>
-    @endif
-<form id="form_add_ingredient" enctype= 'multipart/form-data' method = 'post'>
-    @csrf
-    <div class="form-group mb-3">
-        <label for="simpleinput">Tên món ăn</label>
-        <input type="text" class="form-control" value="{{$object->name}}" readonly>
-    </div>
-
-    <?php  $a = 1 ?>
-    <div class="form-group mt-3">
-        <label for="example-email"> Nhóm thực phẩm </label>
-        <Br>
-        <label>
-            <select id="provinces"  class="custom-select">
-                <option selected disabled>Chọn nhóm</option>
-                @foreach($ingredient1 as $each)
-                    <option value="{{$each->id}}">{{$each->name}}</option>
-                @endforeach
-            </select>
-        </label>
+        @endif
+        <div class="form-group mb-3">
+            <label for="simpleinput">Tên món ăn</label>
+            <input type="text" class="form-control" value="{{$object->name}}" readonly>
         </div>
-    <div class="form-group mt-3">
 
-        <label for="example-email">Thành phần món ăn</label>
-        <input type="hidden" name="dish_id[]" value="{{$object->id}}">
-        <input type="hidden" name="id_dish" value="{{$object->id}}">
-    @for($i = 0; $i < $a ; $i++)
-    </div>
+        <?php  $a = 1 ?>
+        <div class="form-group mt-3">
+            <label for="example-email"> Nhóm thực phẩm </label>
+            <Br>
+            <label>
+                <select id="provinces"  class="custom-select">
+                    <option selected disabled>Chọn nhóm</option>
+                    @foreach($ingredient1 as $each)
+                        <option value="{{$each->id}}">{{$each->name}}</option>
+                    @endforeach
+                </select>
+            </label>
+            </div>
+        <div class="form-group mt-3">
 
-    <div id="selectIngredient"></div>
-    @endfor
-    <button class="btn btn-info " style="margin-top: 0px; margin-left: 120px" id ='add_ingredient'>Thêm</button>
-    <div id="receive_data"></div>
+            <label for="example-email">Thành phần món ăn</label>
+            <input type="hidden" name="dish_id[]" value="{{$object->id}}">
+            <input type="hidden" name="id_dish" value="{{$object->id}}">
+        @for($i = 0; $i < $a ; $i++)
+        </div>
 
-<div id="show">
-    <table>
-        <tr>
-            <th >Thực phẩm</th> &nbsp; &nbsp;
-            <th style="padding-left: 50px">Số lượng</th>
-            <th style="margin-left: 50px"></th>
+        <div id="selectIngredient"></div>
+        @endfor
+        <button class="btn btn-info " style="margin-top: 0px; margin-left: 120px" id ='add_ingredient'>Thêm</button>
+        <div id="receive_data"></div>
 
-        </tr>
-        @foreach($object1 as $each)
-            <tr style="padding-top: 20px">
-                <td>
-                    {{$each->ingredients_name}}
-                </td>
-                <td style="padding-left: 70px";>
-                    {{$each->quantity}}
-                </td>
-                <td>
-                    <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Delete1({{$each->id}},{{$each->quantity}},{{$object->id}},{{$each->ingredient_id}},this)" type="button">Xóa</button>
-                </td>
-                {{-- <td>
-                    <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Update1({{$each->id}},this)" type="button">Sửa</button>
-                </td> --}}
+    <div id="show">
+        <table>
+            <tr>
+                <th >Thực phẩm</th> &nbsp; &nbsp;
+                <th style="padding-left: 50px">Số lượng</th>
+                <th style="margin-left: 50px"></th>
+
             </tr>
-        @endforeach
-    </table>
+            @foreach($object1 as $each)
+                <tr style="padding-top: 20px">
+                    <td>
+                        {{$each->ingredients_name}}
+                    </td>
+                    <td style="padding-left: 70px";>
+                        {{$each->quantity}}
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Delete1({{$each->id}},{{$each->quantity}},{{$object->id}},{{$each->ingredient_id}},this)" type="button">Xóa</button>
+                    </td>
+                    {{-- <td>
+                        <button class="btn btn-xs btn-danger " style=" margin-left:50px" id="mediumButton"  onclick="Update1({{$each->id}},this)" type="button">Sửa</button>
+                    </td> --}}
+                </tr>
+            @endforeach
+        </table>
+    </div>
+    </form>
 </div>
-</form>
-
 <script>
     $(document).ready(function (){
         $('#provinces').on('change',function() {
@@ -117,23 +117,55 @@ use App\Models\Dish;
             },
             error :function( data ) {
                 if( data.status === 422 ) {
-                var errors = $.parseJSON(data.responseText);
-                $.each(errors, function (key, value) {
-                // console.log(key+ " " +value);
-                $('#response').addClass("alert alert-danger");
+                    $('#mediumModal').modal('hide');
+                    var errors = $.parseJSON(data.responseText);
+                    $.each(errors, function (key, value) {
+                    // console.log(key+ " " +value);
+                    $('#response').addClass("alert alert-danger");
 
-                if($.isPlainObject(value)) {
-                    $.each(value, function (key, value) {                       
-                        console.log(key+ " " +value);
-                    $('#response').show().append(value+"<br/>");
-
-                    });
-                }else{
-                $('#response').show().append(value+"<br/>"); //this is my div with messages
-                }
+                    if($.isPlainObject(value)) {
+                        $.each(value, function (key, value) {                           
+                            console.log(key+ " " +value);
+                        $('#response').show().append(value+"<br/>");
+                        $('#mediumModal').modal('hide');
+                        });
+                    }else{
+                    $('#response').show().append(value+"<br/>"); //this is my div with messages
+                    }
             });
+            
           }}
-        });
+            // error: function(errors) {
+            //             console.log(error);
+            //             alert("Error");
+            //             // $('#loader').hide();
+            //         },
+            // error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+            //     var errors = jqXhr.responseJSON;
+            //     var errorsHtml = '';
+            //     $.each(errors['errors'], function (index, value) {
+            //         errorsHtml += '<ul class="list-group"><li class="list-group-item alert alert-danger">' + value + '</li></ul>';
+            //     });
+            //     //I use SweetAlert2 for this
+            //     swal({
+            //         title: "Error " + jqXhr.status + ': ' + errorThrown,// this will output "Error 422: Unprocessable Entity"
+            //         html: errorsHtml,
+            //         width: 'auto',
+            //         confirmButtonText: 'Try again',
+            //         cancelButtonText: 'Cancel',
+            //         confirmButtonClass: 'btn',
+            //         cancelButtonClass: 'cancel-class',
+            //         showCancelButton: true,
+            //         closeOnConfirm: true,
+            //         closeOnCancel: true,
+            //         type: 'error'
+            //     }, function(isConfirm) {
+            //         if (isConfirm) {
+            //             $('#openModal').click();//this is when the form is in a modal
+            //         }
+            //     });
+            //         }
+                })
     })
     function Delete1(id,quantity,id_dish,id_ingredient,_this){
         var result = confirm("Bạn có chắc muốn xóaaa không?");
