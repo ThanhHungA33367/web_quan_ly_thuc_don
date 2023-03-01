@@ -78,6 +78,10 @@
         var form = $('#form_add_menu');
         var data = new FormData(form[0]);
 
+        // var name = $("input[name='name']").val();
+        // var menu_date = $("input[name='menu_date']").val();
+        // var description = $("input[name='description']").val();
+
         let nodeList = document.getElementsByClassName('select_dish_type')
         let array = []
         for (let i = 0; i < nodeList.length; i++) {
@@ -88,10 +92,10 @@
                 dish_id: value,
                 meal_id: meal_id
             })
-        }
-
+         }
+         
         data.append('mealdish', JSON.stringify(array))
-
+    
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -107,25 +111,26 @@
                 alert('Updated completed.');
                 $("#receive_data").html(res);
             },
-            error :function( data ) {
-                if( data.status === 422 ) {
-                var errors = $.parseJSON(data.responseText);
-                $.each(errors, function (key, value) {
-                // console.log(key+ " " +value);
-                $('#response').addClass("alert alert-danger");
+            error :function( data ) {}
+        //         if( data.status === 422 ) {
+        //         var errors = $.parseJSON(data.responseText);
+        //         $.each(errors, function (key, value) {
+        //         // console.log(key+ " " +value);
+        //         $('#response').addClass("alert alert-danger");
 
-                if($.isPlainObject(value)) {
-                    $.each(value, function (key, value) {                       
-                        console.log(key+ " " +value);
-                    $('#response').show().append(value+"<br/>");
+        //         if($.isPlainObject(value)) {
+        //             $.each(value, function (key, value) {                       
+        //                 console.log(key+ " " +value);
+        //             $('#response').show().append(value+"<br/>");
 
-                    });
-                }else{
-                $('#response').show().append(value+"<br/>"); //this is my div with messages
-                }
-            });
-          }}
-        }),
+        //             });
+        //         }else{
+        //         $('#response').show().append(value+"<br/>"); //this is my div with messages
+        //         }
+        //     });
+        //   }}
+        });
+    })
     $(document).ready(function() {
         $('#children_type_change').on('change', function() {
             let children_type_id = $(this).val();
@@ -144,6 +149,6 @@
             })
         });
     })
-})
+
 </script>
 @endsection

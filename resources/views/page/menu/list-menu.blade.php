@@ -18,6 +18,39 @@
     </div>
     @endif
 
+<<<<<<< HEAD
+            <div class="text-right">
+                <a href="{{ route('menus.export', [
+                    'q' => $search,
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                ]) }}" class="btn btn-success"><i class="fa fa-download"></i> Xuất tệp excel</a>
+            </div>     
+                   
+        <div class='card-body'>
+            <form class="float-right form-group form-inline">
+                <div class="form-group">
+                    <label class="mr-2">Tìm kiếm:</label>
+                    <input type="text" name="q" value="{{ $search }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="startDate">Bắt đầu: </label>
+                    <input type="date" name="startDate" id="startDate" value="{{ $startDate }}" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">Đến: </label>
+                    <input type="date" name="endDate" id="endDate" value="{{ $endDate }}" class="form-control"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                <a href="{{ route('reset-search') }}" class="btn btn-secondary">Reset</a>
+            </form>
+
+            
+
+
+            <table class="table table-bordered ">
+                <thead class="thead-dark">
+=======
     <div class='card-body'>
         <form class="float-right form-group form-inline">
             <label class="mr-2">Search:</label>
@@ -26,6 +59,7 @@
 
         <table class="table table-bordered ">
             <thead class="thead-dark">
+>>>>>>> dd9d1593341a756a7fbae361325a347f70128824
                 <tr>
                     <th>#</th>
                     <th>Tên thực đơn</th>
@@ -80,6 +114,24 @@
             @endforeach
         </table>
 
+<<<<<<< HEAD
+             {{-- {{ $data->links() }} --}}
+
+             {{ $data->links('pagination::bootstrap-4', ['onEachSide' => 3]) }}
+
+            <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+                            <div id="detail">
+                            </div>
+=======
         <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel1" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -90,6 +142,7 @@
                     </div>
                     <div class="modal-body">
                         <div id="detail">
+>>>>>>> dd9d1593341a756a7fbae361325a347f70128824
                         </div>
                     </div>
                 </div>

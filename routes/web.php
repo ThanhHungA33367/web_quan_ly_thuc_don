@@ -114,6 +114,14 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     Route::get('/create_menu/{dish_type_id}', [MenuController::class, 'getDish']);
     Route::get('/create_menu/send/{children_type_id}', [MenuController::class, 'getChildren']);
     Route::post('/create_menu/store', [MenuController::class, 'store'])->name('create_menu.store');
+<<<<<<< HEAD
+    Route::get('/menu',[MenuController::class, 'list'])->name('list_menu');
+    Route::get('/menus/export', [MenuController::class, 'export'])->name('menus.export');
+    Route::get('/reset-search', function () {
+        return redirect()->route('list_menu');
+    })->name('reset-search');
+=======
     Route::get('/menu', [MenuController::class, 'list'])->name('list_menu');
     Route::get('/menu/detail/{id}', [MenuController::class, 'view_detail'])->name('view_detail');
+>>>>>>> dd9d1593341a756a7fbae361325a347f70128824
 });
