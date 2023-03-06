@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 ?>
 <form action = '{{route('account.update',$object->id)}}'  method="post" enctype="multipart/form-data">
     @csrf
@@ -22,12 +23,12 @@ use App\Models\User;
         <label for="example-email">Họ và tên</label>
         <input type="text" name="full_name"  class="form-control" value="{{$object->full_name}}" required>
     </div>
-
+    @if(Auth::user()->status !== 0)
     <div class="form-group mb-3">
         <label for="example-email">Trường</label>
         <input type="text" name="school_name"  class="form-control" value="{{$object->school_name}}" required>
     </div>
-
+    @endif
     <div class="form-group mb-3">
         <label for="example-email">Số điện thoại</label>
         <input type="text" name="phone"  class="form-control" value="{{$object->phone}}" required>

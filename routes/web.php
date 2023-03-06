@@ -68,7 +68,7 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     // Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
     // Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     // Route::put('/user/edit/{id}', [UserController::class, 'update'])->name('user.update');
-    // Route::get('/user/delete', [UserController::class, 'cancel'])->name('user.cancel');
+    Route::get('/user/change', [UserController::class, 'changeRole'])->name('user.change');
 
 
     Route::get('/dish_type', [DishTypeController::class, 'index'])->name('dish_type.index');
