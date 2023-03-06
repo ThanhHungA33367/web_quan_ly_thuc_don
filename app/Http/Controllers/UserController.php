@@ -184,8 +184,4 @@ class UserController extends Controller
     {
         return view('layout.view_content.content3');
     }
-
-
-
-    
 }

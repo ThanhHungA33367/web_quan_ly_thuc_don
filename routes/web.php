@@ -43,7 +43,9 @@ Route::post('/register/store', [RegisterController::class, 'store'])->name('regi
 
 Route::group(['middleware' => ['checkAdminLogin']], static function () {
 
-
+    Route::get('/content1', [UserController::class, 'content1'])->name('user.content1');
+    Route::get('/content2', [UserController::class, 'content2'])->name('user.content2');
+    Route::get('/content3', [UserController::class, 'content3'])->name('user.content3');
     Route::get('/', [UserController::class, 'index'])->name('user.index');
 
     Route::get('/dish', [DishController::class, 'index'])->name('dish.index');
