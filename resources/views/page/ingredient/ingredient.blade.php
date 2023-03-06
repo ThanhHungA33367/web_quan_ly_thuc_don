@@ -87,6 +87,8 @@
                 @endforeach
 
             </table>
+            {{ $data->links('pagination::bootstrap-4', ['onEachSide' => 3]) }}
+
             <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">

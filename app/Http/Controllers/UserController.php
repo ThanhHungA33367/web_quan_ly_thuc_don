@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
 
 
@@ -25,11 +28,49 @@ class UserController extends Controller
     {
         $search = $request-> get('q');
         $data = User::where('users.email','like','%'.$search.'%')
-            ->paginate(2)->appends(['q' => $search]);
+            ->paginate(10)->appends(['q' => $search]);
         return view('page.user.user',[
             'data' => $data,
             'search' => $search,
         ]);
+    }
+
+    public function getUser(Request $request){
+        $userId = Auth::id();
+        $user = User::where('id', '=', $userId)->first();
+        if($user->status == 0){
+            $role = 'User';
+        }
+        else{
+            $role = 'Admin';
+        }
+        return view('page.account',[
+            'user' => $user,
+            'role' => $role,
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validatedData = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:5|confirmed',
+        ], [
+            'current_password.required' => 'Vui lòng nhập mật khẩu hiện tại',
+            'new_password.required' => 'Vui lòng nhâp mật khẩu mới',
+            'new_password.min' => 'Mật khẩu mới tối thiểu 5 kí tự',
+            'new_password.confirmed' => 'Vui lòng xác nhận lại mật khẩu',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($validatedData['current_password'], $user->password)) {
+            return response()->json(['message' => 'Mật khẩu hiện tại không đúng'], 400);
+        }
+
+        $user->update(['password' => Hash::make($validatedData['new_password'])]);
+
+        return response()->json(['message' => 'Thay đổi mật khẩu thành công'], 200);
     }
 
     /**
@@ -68,6 +109,23 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
+    }
+
+    public function editProfile($id)
+    {
+        $object = User::where('id', '=', $id)->first();
+        
+        return view('page.modal-change-profile',[
+            'object' => $object,
+        ]);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request, $id)
+    {
+        $user = User::find($id);
+        $user->fill($request->validated());
+        $user->save();
+        return redirect()->route('account.index')->with('message', 'Sửa thành công!');
     }
 
     /**

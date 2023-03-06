@@ -122,7 +122,7 @@ use App\Models\Dish;
                     $.each(errors, function (key, value) {
                     // console.log(key+ " " +value);
                     $('#response').addClass("alert alert-danger");
-
+                    $('#response').empty();
                     if($.isPlainObject(value)) {
                         $.each(value, function (key, value) {                           
                             console.log(key+ " " +value);
@@ -132,9 +132,12 @@ use App\Models\Dish;
                     }else{
                     $('#response').show().append(value+"<br/>"); //this is my div with messages
                     }
+                    setTimeout(function() {
+                    $('#response').hide();
+                    $('#response').empty();
+                    }, 5000);
             });
-            
-          }}
+            }}
             // error: function(errors) {
             //             console.log(error);
             //             alert("Error");
