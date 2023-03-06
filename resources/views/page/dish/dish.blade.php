@@ -88,6 +88,8 @@
             @endforeach
 
         </table>
+        {{ $data->links('pagination::bootstrap-4', ['onEachSide' => 3]) }}
+
         <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -132,23 +134,7 @@
                         // alert("Page " + href + " cannot open. Error:" + error);
                         // $('#loader').hide();
                     },
-                    // error :function( data ) {
-                    //     if( data.status === 422 ) {
-                    //         var errors = $.parseJSON(data.responseText);
-                    //         $.each(errors, function (key, value) {
-                    //         // console.log(key+ " " +value);
-                    //         $('#response').addClass("alert alert-danger");
-
-                    //         if($.isPlainObject(value)) {
-                    //             $.each(value, function (key, value) {                           
-                    //                 console.log(key+ " " +value);
-                    //             $('#response').show().append(value+"<br/>");
-                    //             });
-                    //         }else{
-                    //         $('#response').show().append(value+"<br/>"); //this is my div with messages
-                    //         }
-                    //     });
-                    //     }}
+                    
                     timeout: 8000
                 })
             }

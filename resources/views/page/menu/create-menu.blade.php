@@ -43,7 +43,7 @@
         var more_fields = `
    
              <select class="custom-select mb-3 select_dish_type" name="dish_id[]"  value="" data="${meal_id}">
-                <option selected disabled> Chọn món</option>
+                <option selected disabled value=""> Chọn món</option>
                 @isset($dish1)
                 @foreach($dish1 as $each2)
                 <option value="{{$each2->id}}">{{$each2->name}}</option>
@@ -78,10 +78,6 @@
         var form = $('#form_add_menu');
         var data = new FormData(form[0]);
 
-        // var name = $("input[name='name']").val();
-        // var menu_date = $("input[name='menu_date']").val();
-        // var description = $("input[name='description']").val();
-
         let nodeList = document.getElementsByClassName('select_dish_type')
         let array = []
         for (let i = 0; i < nodeList.length; i++) {
@@ -111,24 +107,30 @@
                 alert('Updated completed.');
                 $("#receive_data").html(res);
             },
-            error :function( data ) {}
-        //         if( data.status === 422 ) {
-        //         var errors = $.parseJSON(data.responseText);
-        //         $.each(errors, function (key, value) {
-        //         // console.log(key+ " " +value);
-        //         $('#response').addClass("alert alert-danger");
-
-        //         if($.isPlainObject(value)) {
-        //             $.each(value, function (key, value) {                       
-        //                 console.log(key+ " " +value);
-        //             $('#response').show().append(value+"<br/>");
-
-        //             });
-        //         }else{
-        //         $('#response').show().append(value+"<br/>"); //this is my div with messages
-        //         }
-        //     });
-        //   }}
+            error :function( data ) {
+                if( data.status === 422 ) {
+                    $('#mediumModal').modal('hide');
+                    var errors = $.parseJSON(data.responseText);
+                    $.each(errors, function (key, value) {
+                    // console.log(key+ " " +value);
+                    $('#response').addClass("alert alert-danger");
+                    $('#response').empty();
+                    if($.isPlainObject(value)) {
+                        $.each(value, function (key, value) {                           
+                            console.log(key+ " " +value);
+                        $('#response').show().append(value+"<br/>");
+                        $('#mediumModal').modal('hide');
+                        });
+                    }else{
+                    $('#response').show().append(value+"<br/>"); //this is my div with messages
+                    }
+                    setTimeout(function() {
+                    $('#response').hide();
+                    $('#response').empty();
+                    }, 5000);
+            });
+            }}
+        
         });
     })
     $(document).ready(function() {

@@ -6,8 +6,8 @@
             <option value="{{$each1->id}}">{{$each1->name}}</option>
         </select>
         <div>
-            <select class="custom-select mb-3 select_dish_type" name="dish_id[]" data="{{$each1->id}}" value="">
-                <option selected disabled> Chọn món</option>
+            <select class="custom-select mb-3 select_dish_type" name="dish_id{{$loop->iteration}}[]" data="{{$each1->id}}" value="">
+                <option selected disabled value="test"> Chọn món</option>
                 @isset($dish1)
                 @foreach($dish1 as $each2)
                 <option value="{{$each2->id}}">{{$each2->name}}</option>
@@ -28,8 +28,8 @@
         let element = e.target
         var more_fields = `
    
-             <select class="custom-select mb-3 select_dish_type" name="dish_id[]"  value="" data="${meal_id}">
-                <option selected disabled> Chọn món</option>
+             <select class="custom-select mb-3 select_dish_type" name="dish_id[]"   data="${meal_id}">
+                <option selected disabled value=""> Chọn món3</option>
                 @isset($dish1)
                 @foreach($dish1 as $each2)
                 <option value="{{$each2->id}}">{{$each2->name}}</option>

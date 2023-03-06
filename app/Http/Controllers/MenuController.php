@@ -164,7 +164,7 @@ class MenuController extends Controller
      * @param  \App\Http\Requests\StoreMenuRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMenuRequest $request)
     {
         $data = $request->except(['_token']);
         $menu = new Menu();
@@ -178,22 +178,15 @@ class MenuController extends Controller
         $menu->lipid = 0;
         $menu->carb = 0;
         $menu->cost = 0;
-
-        // $validator = Validator::make($request->all(), [
-        //     'mealdish.*.dish_id' => 'required|numeric',
-        //     'mealdish.*.meal_id' => 'required',
-        //     'mealdish.*' => new UniqueDishMealPairRule
-        // ]);
-        
-        // if ($validator->fails()) {
-        //     return redirect()->back()->withErrors($validator);
-        // }
       
         $menu->save();
         $menu_id = [];
         $menu_id = $menu->id;
         $mealdish = json_decode($request->mealdish, true);
-
+        $validator = Validator::make($request->all(), $request->rules());
+            if ($validator->fails()) {
+                return response()->json(['errors' => 'errors']);
+            }
         for ($i = 0; $i < count($mealdish); $i++) {
             $scores = new Menu_Dish();
             $scores->dish_id = $mealdish[$i]['dish_id'];
@@ -204,10 +197,11 @@ class MenuController extends Controller
                 $menu->lipid += $dish->lipid;
                 $menu->carb += $dish->carb;
                 $menu->cost += $dish->cost;
+                $scores->menu_id = $menu_id;
+                $scores->meal_id = $mealdish[$i]['meal_id']; //add a default value here  
+                $scores->save();
             }
-            $scores->menu_id = $menu_id;
-            $scores->meal_id = $mealdish[$i]['meal_id']; //add a default value here  
-            $scores->save();
+            
         }
         $menu->save();
 

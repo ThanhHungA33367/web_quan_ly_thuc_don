@@ -18,7 +18,6 @@
     </div>
     @endif
 
-<<<<<<< HEAD
             <div class="text-right">
                 <a href="{{ route('menus.export', [
                     'q' => $search,
@@ -50,16 +49,6 @@
 
             <table class="table table-bordered ">
                 <thead class="thead-dark">
-=======
-    <div class='card-body'>
-        <form class="float-right form-group form-inline">
-            <label class="mr-2">Search:</label>
-            <input type="search" name="q" value="{{ $search }}" class="form-control">
-        </form>
-
-        <table class="table table-bordered ">
-            <thead class="thead-dark">
->>>>>>> dd9d1593341a756a7fbae361325a347f70128824
                 <tr>
                     <th>#</th>
                     <th>Tên thực đơn</th>
@@ -114,14 +103,13 @@
             @endforeach
         </table>
 
-<<<<<<< HEAD
              {{-- {{ $data->links() }} --}}
 
              {{ $data->links('pagination::bootstrap-4', ['onEachSide' => 3]) }}
 
             <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -131,18 +119,6 @@
                         <div class="modal-body" >
                             <div id="detail">
                             </div>
-=======
-        <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel1" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="detail">
->>>>>>> dd9d1593341a756a7fbae361325a347f70128824
                         </div>
                     </div>
                 </div>
