@@ -21,7 +21,7 @@ class IngredientController extends Controller
         $data = Ingredient::where('ingredients.name','like','%'.$search.'%')
             ->join('ingredient_type','ingredient_type_id','=','ingredient_type.id')
             ->select('ingredient_type.name as ingredient_type_name','ingredients.*')
-            ->paginate(2)->appends(['q' => $search]);
+            ->paginate(10)->appends(['q' => $search]);
         return view('page.ingredient.ingredient',[
             'data' => $data,
             'search' => $search,

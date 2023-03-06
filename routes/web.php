@@ -116,6 +116,15 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     Route::get('/create_menu/{dish_type_id}', [MenuController::class, 'getDish']);
     Route::get('/create_menu/send/{children_type_id}', [MenuController::class, 'getChildren']);
     Route::post('/create_menu/store', [MenuController::class, 'store'])->name('create_menu.store');
+    Route::get('/menus/export', [MenuController::class, 'export'])->name('menus.export');
+    Route::get('/reset-search', function () {
+        return redirect()->route('list_menu');
+    })->name('reset-search');
     Route::get('/menu', [MenuController::class, 'list'])->name('list_menu');
     Route::get('/menu/detail/{id}', [MenuController::class, 'view_detail'])->name('view_detail');
+
+    Route::get('/my-account', [UserController::class, 'getUser'])->name('account.index');
+    Route::put('/password/update', [UserController::class, 'updatePassword'])->middleware('auth')->name('password.update');
+    Route::get('/my-account/edit/{id}', [UserController::class, 'editProfile'])->name('account.edit');
+    Route::put('/my-account/edit/{id}', [UserController::class, 'updateProfile'])->name('account.update');
 });

@@ -20,7 +20,7 @@ class DishTypeController extends Controller
     {
         $search = $request-> get('q');
         $data = Dish_Type::where('dish_type.name','like','%'.$search.'%')
-            ->paginate(2)->appends(['q' => $search]);
+            ->paginate(10)->appends(['q' => $search]);
         return view('page.dish-type.dish_type',[
             'data' => $data,
             'search' => $search,

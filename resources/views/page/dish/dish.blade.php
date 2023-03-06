@@ -1,6 +1,7 @@
 @extends('layout.master')
 @section('content')
 <div class='card'>
+    <div id ='response'></div>
     @if ($errors->any())
     <div class="card-header">
         <div class="alert alert-danger">
@@ -87,6 +88,8 @@
             @endforeach
 
         </table>
+        {{ $data->links('pagination::bootstrap-4', ['onEachSide' => 3]) }}
+
         <div class="modal" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -102,6 +105,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <script>
             function Add_Ingredient(id) {
                 $('#mediumModal').modal({
@@ -130,6 +134,7 @@
                         // alert("Page " + href + " cannot open. Error:" + error);
                         // $('#loader').hide();
                     },
+                    
                     timeout: 8000
                 })
             }

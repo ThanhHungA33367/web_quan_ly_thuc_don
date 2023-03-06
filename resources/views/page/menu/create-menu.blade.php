@@ -43,7 +43,7 @@
         var more_fields = `
    
              <select class="custom-select mb-3 select_dish_type" name="dish_id[]"  value="" data="${meal_id}">
-                <option selected disabled> Chọn món</option>
+                <option selected disabled value=""> Chọn món</option>
                 @isset($dish1)
                 @foreach($dish1 as $each2)
                 <option value="{{$each2->id}}">{{$each2->name}}</option>
@@ -88,10 +88,10 @@
                 dish_id: value,
                 meal_id: meal_id
             })
-        }
-
+         }
+         
         data.append('mealdish', JSON.stringify(array))
-
+    
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -109,23 +109,30 @@
             },
             error :function( data ) {
                 if( data.status === 422 ) {
-                var errors = $.parseJSON(data.responseText);
-                $.each(errors, function (key, value) {
-                // console.log(key+ " " +value);
-                $('#response').addClass("alert alert-danger");
-
-                if($.isPlainObject(value)) {
-                    $.each(value, function (key, value) {                       
-                        console.log(key+ " " +value);
-                    $('#response').show().append(value+"<br/>");
-
-                    });
-                }else{
-                $('#response').show().append(value+"<br/>"); //this is my div with messages
-                }
+                    $('#mediumModal').modal('hide');
+                    var errors = $.parseJSON(data.responseText);
+                    $.each(errors, function (key, value) {
+                    // console.log(key+ " " +value);
+                    $('#response').addClass("alert alert-danger");
+                    $('#response').empty();
+                    if($.isPlainObject(value)) {
+                        $.each(value, function (key, value) {                           
+                            console.log(key+ " " +value);
+                        $('#response').show().append(value+"<br/>");
+                        $('#mediumModal').modal('hide');
+                        });
+                    }else{
+                    $('#response').show().append(value+"<br/>"); //this is my div with messages
+                    }
+                    setTimeout(function() {
+                    $('#response').hide();
+                    $('#response').empty();
+                    }, 5000);
             });
-          }}
-        }),
+            }}
+        
+        });
+    })
     $(document).ready(function() {
         $('#children_type_change').on('change', function() {
             let children_type_id = $(this).val();
@@ -144,6 +151,6 @@
             })
         });
     })
-})
+
 </script>
 @endsection

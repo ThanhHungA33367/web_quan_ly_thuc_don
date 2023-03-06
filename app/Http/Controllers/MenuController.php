@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\UniqueDishMealPairRule;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\MenuExport;
 
 
 class MenuController extends Controller
@@ -40,25 +43,69 @@ class MenuController extends Controller
     {
         $userId = Auth::id();
         $user = User::where('id', '=', $userId)->first();
-        $search = $request->get('q');
-
+        $search = $request-> get('q');
+        $startDate = $request->get('startDate');
+        $endDate = $request->get('endDate');
         if ($user->status == 0) {
-            $data = Menu::where('menus.name', 'like', '%' . $search . '%')->where('users.id', '=', $userId)
-                ->join('users', 'user_id', '=', 'users.id')
-                ->join('children_type', 'children_type_id', '=', 'children_type.id')
-                ->select('children_type.name as children_type_name', 'menus.*')
-                ->paginate(10)->appends(['q' => $search]);
+            $query = Menu::where('users.id', '=', $userId);
         } else {
-            $data = Menu::where('menus.name', 'like', '%' . $search . '%')
-                ->join('children_type', 'children_type_id', '=', 'children_type.id')
-                ->select('children_type.name as children_type_name', 'menus.*')
-                ->paginate(10)->appends(['q' => $search]);
+            $query = Menu::query();
         }
-
+    
+        if ($search) {
+            $query->where('menus.name', 'like', '%' . $search . '%');
+        }
+    
+        if ($startDate && $endDate) {
+            $query->whereBetween('menu_date', [$startDate, $endDate]);
+        }
+    
+        $data = $query->join('users', 'user_id', '=', 'users.id')
+            ->join('children_type', 'children_type_id', '=', 'children_type.id')
+            ->select('children_type.name as children_type_name', 'menus.*')
+            ->paginate(10)
+            ->appends([
+                'q' => $search,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+            ]);
+    
         return view('page.menu.list-menu', [
             'data' => $data,
             'search' => $search,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
+    }
+
+    public function export(Request $request)
+    {
+        $userId = Auth::id();
+        $user = User::where('id', '=', $userId)->first();
+        $search = $request->get('q');
+        $startDate = $request->get('startDate');
+        $endDate = $request->get('endDate');
+
+        if ($user->status == 0) {
+            $query = Menu::where('users.id', '=', $userId);
+        } else {
+            $query = Menu::query();
+        }
+
+        if ($search) {
+            $query->where('menus.name', 'like', '%' . $search . '%');
+        }
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('menu_date', [$startDate, $endDate]);
+        }
+
+        $data = $query->join('users', 'user_id', '=', 'users.id')
+            ->join('children_type', 'children_type_id', '=', 'children_type.id')
+            ->select('users.full_name as user_name','children_type.name as children_type_name', 'menus.*')
+            ->get();
+
+        return Excel::download(new MenuExport($data), 'menus.xlsx');
     }
 
     public function view_detail($id)
@@ -131,42 +178,33 @@ class MenuController extends Controller
         $menu->lipid = 0;
         $menu->carb = 0;
         $menu->cost = 0;
-        $validator = Validator::make($request->all(), $request->rules());
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()]);
-        }
-        //$menu->validate();
+      
         $menu->save();
         $menu_id = [];
         $menu_id = $menu->id;
         $mealdish = json_decode($request->mealdish, true);
-
+        $validator = Validator::make($request->all(), $request->rules());
+            if ($validator->fails()) {
+                return response()->json(['errors' => 'errors']);
+            }
         for ($i = 0; $i < count($mealdish); $i++) {
             $scores = new Menu_Dish();
             $scores->dish_id = $mealdish[$i]['dish_id'];
             $dish = Dish::where('id', '=', $scores->dish_id)->first();
-            $menu->kalo += $dish->kalo;
-            $menu->protein += $dish->protein;
-            $menu->lipid += $dish->lipid;
-            $menu->carb += $dish->carb;
-            $menu->cost += $dish->cost;
-            $scores->menu_id = $menu_id;
-            $scores->meal_id = $mealdish[$i]['meal_id']; //add a default value here
-            // $validator = Validator::make($mealdish[$i],[
-            //     'dish_id' => [
-            //         Rule::unique('menu_dish')->where(fn ($query) => $query->where('meal_id', $mealdish[$i]['meal_id'])
-            //                                                                 ->where('dish_id', $mealdish[$i]['dish_id'])),
-            //      ]
-            // ] );
-            // if ($validator->fails()) {
-            //     return response()->json(['errors' => 'errors']);
-            // }
-
-            $scores->save();
+            if ($dish) {
+                $menu->kalo += $dish->kalo;
+                $menu->protein += $dish->protein;
+                $menu->lipid += $dish->lipid;
+                $menu->carb += $dish->carb;
+                $menu->cost += $dish->cost;
+                $scores->menu_id = $menu_id;
+                $scores->meal_id = $mealdish[$i]['meal_id']; //add a default value here  
+                $scores->save();
+            }
+            
         }
         $menu->save();
-        return response()->json(['success' => 'success'], 200);
+
     }
 
     /**

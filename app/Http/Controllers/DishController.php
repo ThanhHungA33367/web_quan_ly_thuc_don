@@ -13,6 +13,8 @@ use App\Models\Ingredient_Type;
 use App\Models\Children_Type;
 use DishIngredient;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule; 
+use Illuminate\Support\Facades\Validator;
 
 class DishController extends Controller
 {
@@ -122,7 +124,7 @@ class DishController extends Controller
     //     ]);
     // }
 
-    public function store_ingredient_dish(Request $request)
+    public function store_ingredient_dish(StoreDish_IngredientRequest $request)
     {
             $ingredient = $request->except(['_token']);
 
@@ -143,9 +145,9 @@ class DishController extends Controller
             $scores->ingredient_id = isset($ingredients[$key]) ? $ingredients[$key] : ''; //add a default value here
             $scores->quantity = isset($quantity [$key]) ? $quantity [$key] : ''; //add a default value here
             $validator = Validator::make($request->all(), $request->rules());
-        
+            
             if ($validator->fails()) {
-                return response()->json($validator->errors());
+                return response()->json(['errors' => 'errors']);
             }
             $scores->save();
         }
