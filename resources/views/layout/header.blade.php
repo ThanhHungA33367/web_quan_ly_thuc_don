@@ -1,10 +1,11 @@
+
 <div class="navbar-custom topnav-navbar topnav-navbar-dark">
 
     <div class="container-fluid">
 
         <!-- LOGO -->
-        <a href="" class="topnav-logo">
-            <span class="topnav-logo-lg">
+        <a class="topnav-logo " st >
+            <span class="topnav-logo-lg ">
 
             </span>
             <span class="topnav-logo-sm">
@@ -29,6 +30,7 @@
             </li>
 
             <li class="dropdown notification-list topbar-dropdown d-none d-lg-block">
+
                 <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" id="topbar-languagedrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <span class="align-middle">English</span> <i class="mdi mdi-chevron-down align-middle"></i>
                 </a>
@@ -327,6 +329,11 @@
 
             <div class="collapse navbar-collapse" id="topnav-menu-content">
                 <ul class="navbar-nav ">
+                    <li class=" ">
+                        <a class="nav-link " href="{{route('user.index')}}" id="topnav-dashboards" >
+                           Trang chủ
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Quản lý thực đơn

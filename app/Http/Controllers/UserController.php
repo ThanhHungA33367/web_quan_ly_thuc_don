@@ -114,4 +114,17 @@ class UserController extends Controller
     {
         User::destroy($request->id);
     }
+    public function content1(Request $request)
+    {
+        return view('layout.view_content.content1');
+    }
+    public function content2(Request $request)
+    {
+        return view('layout.view_content.content2');
+    }
+    public function content3(Request $request)
+    {
+        return view('layout.view_content.content3');
+    }
+
 }

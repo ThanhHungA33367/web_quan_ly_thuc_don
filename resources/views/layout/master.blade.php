@@ -15,6 +15,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="{{ asset('css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="light-style"/>
+    <link src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
     {{--    <link href="{{ asset('css/now-ui-kit.css_v=1.1.0.css') }}" rel="stylesheet" type="text/css"/>--}}
     <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
