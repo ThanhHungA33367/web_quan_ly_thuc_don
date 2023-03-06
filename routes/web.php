@@ -125,4 +125,8 @@ Route::group(['middleware' => ['checkAdminLogin']], static function () {
     Route::put('/password/update', [UserController::class, 'updatePassword'])->middleware('auth')->name('password.update');
     Route::get('/my-account/edit/{id}', [UserController::class, 'editProfile'])->name('account.edit');
     Route::put('/my-account/edit/{id}', [UserController::class, 'updateProfile'])->name('account.update');
+
+    Route::get('/content1', [UserController::class, 'content1'])->name('user.content1');
+    Route::get('/content2', [UserController::class, 'content2'])->name('user.content2');
+    Route::get('/content3', [UserController::class, 'content3'])->name('user.content3');
 });
