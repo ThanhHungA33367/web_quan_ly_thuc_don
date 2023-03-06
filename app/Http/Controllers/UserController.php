@@ -29,6 +29,7 @@ class UserController extends Controller
         $search = $request-> get('q');
         $data = User::where('users.email','like','%'.$search.'%')
             ->paginate(10)->appends(['q' => $search]);
+        
         return view('page.user.user',[
             'data' => $data,
             'search' => $search,
@@ -38,7 +39,7 @@ class UserController extends Controller
     public function getUser(Request $request){
         $userId = Auth::id();
         $user = User::where('id', '=', $userId)->first();
-        if($user->status == 0){
+        if($user->status == 1){
             $role = 'User';
         }
         else{
@@ -95,7 +96,7 @@ class UserController extends Controller
         $user->fill($request->all());
         $password = Hash::make($request->password);
         $user->password = $password;
-        $user->status = 0;
+        $user->status = 1;
         $user->save();
         return redirect()->route('user.index1')->with('message', 'Thêm thành công!');
     }
@@ -157,6 +158,11 @@ class UserController extends Controller
         return redirect()->route('user.index1')->with('message', 'Sửa thành công!');
     }
 
+    public function changeRole(Request $request){
+        $user = User::find($request->input('id'));
+        $user->status = 0;
+        $user->save();
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -167,6 +173,7 @@ class UserController extends Controller
     {
         //
     }
+
 
     public function cancel(Request $request)
     {

@@ -54,7 +54,22 @@
                         <td>
                             {{ $each->phone }}
                         </td>
-
+                        
+                        @if ($each->status !== 0)
+                        <td id="user">    
+                            Normal user
+                        </td>
+                        <td width = 150 style="text-align: center">
+                            <button  id="mediumButton"  onclick="Change({{$each->id}},this)" class="btn btn-xs btn-info ">Nâng quyền</button>
+                        </td>
+                       
+                        @endif
+                        @if ($each->status === 0)
+                        <td>
+                            Admin
+                        </td>
+                        @endif
+                        
                     </tr>
 
                 @endforeach
@@ -77,62 +92,62 @@
                     </div>
                 </div>
             </div>
-    {{-- <script>
-        function Add(){
-            $.ajax({
-                url: `/user/create`,
-                method:"get",
-                data:{
+    <script>
+        // function Add(){
+        //     $.ajax({
+        //         url: `/user/create`,
+        //         method:"get",
+        //         data:{
 
-                },
-                beforeSend: function() {
-                    $('#loader').show();
-                },
-                // return the result
-                success: function(res) {
-                    $("#detail").html(res)
-                    $('#mediumModal').modal("show");
-                },
-                complete: function() {
-                    $('#loader').hide();
-                },
-                error: function(jqXHR, testStatus, error) {
-                    console.log(error);
-                    // alert("Page " + href + " cannot open. Error:" + error);
-                    // $('#loader').hide();
-                },
-                timeout: 8000
-            })
-        }
-        function Edit(id){
-            $.ajax({
-                url: `/user/edit/${id}`,
-                method:"get",
-                data:{
+        //         },
+        //         beforeSend: function() {
+        //             $('#loader').show();
+        //         },
+        //         // return the result
+        //         success: function(res) {
+        //             $("#detail").html(res)
+        //             $('#mediumModal').modal("show");
+        //         },
+        //         complete: function() {
+        //             $('#loader').hide();
+        //         },
+        //         error: function(jqXHR, testStatus, error) {
+        //             console.log(error);
+        //             // alert("Page " + href + " cannot open. Error:" + error);
+        //             // $('#loader').hide();
+        //         },
+        //         timeout: 8000
+        //     })
+        // }
+        // function Edit(id){
+        //     $.ajax({
+        //         url: `/user/edit/${id}`,
+        //         method:"get",
+        //         data:{
 
-                },
-                beforeSend: function() {
-                    $('#loader').show();
-                },
-                // return the result
-                success: function(res) {
-                    $("#detail").html(res)
-                    $('#mediumModal').modal("show");
-                },
-                complete: function() {
-                    $('#loader').hide();
-                },
-                error: function(jqXHR, testStatus, error) {
-                    console.log(error);
-                    // alert("Page " + href + " cannot open. Error:" + error);
-                    // $('#loader').hide();
-                },
-                timeout: 8000
-            })
-        }
-        function Delete(id,_this){
+        //         },
+        //         beforeSend: function() {
+        //             $('#loader').show();
+        //         },
+        //         // return the result
+        //         success: function(res) {
+        //             $("#detail").html(res)
+        //             $('#mediumModal').modal("show");
+        //         },
+        //         complete: function() {
+        //             $('#loader').hide();
+        //         },
+        //         error: function(jqXHR, testStatus, error) {
+        //             console.log(error);
+        //             // alert("Page " + href + " cannot open. Error:" + error);
+        //             // $('#loader').hide();
+        //         },
+        //         timeout: 8000
+        //     })
+        // }
+        function Change(id,_this){
             $.ajax({
-                url: `/user/delete`,
+                url: `/user/change`,
                 method:"get",
                 data:{
                     id:id,
@@ -142,10 +157,12 @@
                 },
                 // return the result
                 success: function(res) {
-                    var result = confirm("Bạn có chắc muốn xóa không?");
+                    var result = confirm("Người dùng sẽ trở thành Admin?");
                     if (result) {
-                        $(_this).closest('tr').remove();
-
+                        //$(_this).closest('tr').remove();
+                        $('#user').html('Admin');
+                        $(_this).hide();
+                        alert('Cập nhật người dùng thành công');
                     }
                 },
                 complete: function() {
@@ -160,5 +177,5 @@
             })
         }
 
-    </script> --}}
+    </script>
 @endsection

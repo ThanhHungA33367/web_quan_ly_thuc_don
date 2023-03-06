@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <p><strong>Email:</strong> {{ $user->email }}</p>
                     <p><strong>Tên người dùng:</strong> {{ $user->full_name }}</p>
-                    @if(Auth::user()->status !== 1)
+                    @if(Auth::user()->status !== 0)
                     <p><strong>Tên trường:</strong> {{ $user->school_name }}</p>
                     @endif
                     <p><strong>Số điện thoại:</strong> {{ $user->phone }}</p>
